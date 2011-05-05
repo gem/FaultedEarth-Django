@@ -12,9 +12,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'postgresql_psycopg2',
-        'NAME': 'observationes',              # Or path to database file if using sqlite3.
-        'USER': 'django',                      # Not used with sqlite3.
-        'PASSWORD': 'password',                  # Not used with sqlite3.
+        'NAME': 'faulted_earth',              # Or path to database file if using sqlite3.
+        'USER': 'postgres',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -88,10 +88,12 @@ ROOT_URLCONF = 'source.urls'
 #    "django.contrib.auth.context_processors.csrf",
 #)
 
+DATABASE_SCHEMA = 'GEM'
+
 TEMPLATE_DIRS = (
-    #"/Users/benwyss/Projects/sandbox/source/templates",
-    cwd,
-    cwd+'/templates'
+    "/Users/benwyss/Projects/FaultedEarth-Django/source/templates",
+    #cwd,
+    #cwd+'/templates'
 )
 
 INSTALLED_APPS = (

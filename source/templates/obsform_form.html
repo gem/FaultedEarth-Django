@@ -13,14 +13,14 @@
     <form action="" method="post">
 	{% csrf_token %}
         <div class="field">
-            {{ form.name.errors }}
-            <label for="id_name">Observation Type:</label>
-            {{ form.name }}
+            {{ form.observationType.errors }}
+            <label for="id_observationType">Observation Type:</label>
+            {{ form.observationType }}
         </div>
         <div class="field">
-            {{ form.aseismic_slip_factor.errors }}
-            <label for="id_aseismic_slip_factor">Aseismic Slip Factor:</label>
-            {{ form.aseismic_slip_factor }}
+            {{ form.aseismicSlipFactor.errors }}
+            <label for="id_aseismicSlipFactor">Aseismic Slip Factor:</label>
+            {{ form.aseismicSlipFactor }}
         </div>
         <div class="field">
             {{ form.dip_slip_rate.errors }}

@@ -17,45 +17,52 @@
             <label for="id_observationType">Observation Type:</label>
             {{ form.observationType }}
         </div>
-        <div class="field">
-            {{ form.aseismicSlipFactor.errors }}
-            <label for="id_aseismicSlipFactor">Aseismic Slip Factor:</label>
-            {{ form.aseismicSlipFactor }}
-        </div>
-        <div class="field">
-            {{ form.dip_slip_rate.errors }}
-            <label for="id_dip_slip_rate">Dip Slip Rate:</label>
-            {{ form.dip_slip_rate }}
+		<h4>Slip Type:</h4>
+		<div class="field">
+            {{ form.slipType.errors }}
+            <label for="id_slipType">Slip Type:</label>
+            {{ form.slipType }}
         </div>
         <div class="field">
             {{ form.hv_ratio.errors }}
-            <label for="id_hv_ratio">Horiz-Vert Ratio:</label>
+            <label for="id_hv_ratio">H:V Ratio:</label>
             {{ form.hv_ratio }}
         </div>
         <div class="field">
-            {{ form.marker_age.errors }}
-            <label for="id_marker_age">Marker Age:</label>
-            {{ form.marker_age }}
+            {{ form.rake.errors }}
+            <label for="id_rake">Rake (deg):</label>
+            {{ form.rake }}
+        </div>
+		<h4>Slip Rate:</h4>
+		<div class="field">
+            {{ form.net_slip_rate.errors }}
+            <label for="id_net_slip_rate">Net Slip Rate (mm/yr):</label>
+            {{ form.net_slip_rate }}
         </div>
         <div class="field">
-            {{ form.rake.errors }}
-            <label for="id_rake">Rake:</label>
-            {{ form.rake }}
+            {{ form.dip_slip_rate.errors }}
+            <label for="id_dip_slip_rate">Dip Slip Rate (mm/yr):</label>
+            {{ form.dip_slip_rate }}
+        </div>
+		<div class="field">
+            {{ form.strike_slip_rate.errors }}
+            <label for="id_strike_slip_rate">Strike Slip Rate (mm/yr):</label>
+            {{ form.strike_slip_rate }}
+        </div>
+		<div class="field">
+            {{ form.vertical_slip_rate.errors }}
+            <label for="id_vertical_slip_rate">Vertical Slip Rate (mm/yr):</label>
+            {{ form.vertical_slip_rate }}
         </div>
         <div class="field">
             {{ form.slip_rate_category.errors }}
             <label for="id_slip_rate_category">Slip Rate Category:</label>
             {{ form.slip_rate_category }}
         </div>
-		<div class="field">
-            {{ form.strike_slip_rate.errors }}
-            <label for="id_strike_slip_rate">Strike Slip Rate:</label>
-            {{ form.strike_slip_rate }}
-        </div>
-		<div class="field">
-            {{ form.vertical_slip_rate.errors }}
-            <label for="id_vertical_slip_rate">Vertical Slip Rate:</label>
-            {{ form.vertical_slip_rate }}
+        <div class="field">
+            {{ form.marker_age.errors }}
+            <label for="id_marker_age">Marker Age (yrs BP):</label>
+            {{ form.marker_age }}
         </div>
 		<div class="field">
             {{ form.site.errors }}

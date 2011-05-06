@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from source.observations.models import ObservationModel
+from source.observations.models import TempFormSlip
 from source.observations.models import FaultSummary, ObservationType, Slip, Site, SlipType
 
 class ObsFormSlip (forms.Form):
@@ -22,5 +22,5 @@ class ObsFormDisplacement (forms.Form):
     
 class Observation(forms.ModelForm):
     class Meta:
-        model = ObservationModel
+        model = TempFormSlip
     

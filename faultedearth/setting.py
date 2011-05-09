@@ -76,7 +76,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
-ROOT_URLCONF = 'source.urls'
+ROOT_URLCONF = 'faultedearth.urls'
 
 #TEMPLATE_CONTEXT_PROCESSORS = (
 #    "django.contrib.auth.context_processors.auth",
@@ -91,7 +91,7 @@ ROOT_URLCONF = 'source.urls'
 DATABASE_SCHEMA = 'GEM'
 
 TEMPLATE_DIRS = (
-    "/Users/benwyss/Projects/FaultedEarth-Django/source/templates",
+    "/Users/benwyss/Projects/FaultedEarth-Django/faultedearth/templates",
     #cwd,
     #cwd+'/templates'
 )
@@ -104,5 +104,5 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'source.observations',
+    'faultedearth.observations',
 )

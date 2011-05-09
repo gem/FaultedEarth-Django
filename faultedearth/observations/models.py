@@ -221,7 +221,7 @@ class FaultSummary(models.Model):
     created_date = models.DateField()
     modified_date = models.DateField()
     class Meta:
-        db_table = u'fault_summary'
+        db_table = 'GEM\".\"fault_summary'
     
 class BlindFaultSummary(models.Model):
     aseismic_slip_factor = models.DecimalField(max_digits=3, decimal_places=2)

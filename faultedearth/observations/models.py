@@ -143,7 +143,7 @@ class Octant(models.Model):
 class SlipType(models.Model):
     slip_type = models.CharField(unique=True, max_length=24)
     class Meta:
-        db_table = u'slip_type'
+        db_table = 'gem\".\"slip_type'
         
 class SectionTrace(models.Model):
     # neotectonic_section = models.ForeignKey(NeotectonicSection)
@@ -175,7 +175,9 @@ class Slip(models.Model):
     rake = models.IntegerField()
     strike_slip_rate = models.DecimalField(max_digits=3, decimal_places=2)
     vertical_slip_rate = models.DecimalField(max_digits=3, decimal_places=2)
-
+    class Meta:
+        db_table = 'gem\".\"slip'
+        
 class FaultSource(models.Model):
     area = models.DecimalField(max_digits=10, decimal_places=3)
     aseismic_slip_factor = models.DecimalField(max_digits=3, decimal_places=2)
@@ -221,7 +223,7 @@ class FaultSummary(models.Model):
     created_date = models.DateField()
     modified_date = models.DateField()
     class Meta:
-        db_table = 'GEM\".\"fault_summary'
+        db_table = 'gem\".\"faulted_earth'
     
 class BlindFaultSummary(models.Model):
     aseismic_slip_factor = models.DecimalField(max_digits=3, decimal_places=2)
@@ -327,7 +329,7 @@ class ObservationType(models.Model):
                                 choices=OBS_TYPE, default='0')
     #name = models.CharField(unique=True, max_length=24)
     class Meta:
-        db_table = u'observation_type'
+        db_table = 'gem\".\"observation_type'
         
 class Parameter(models.Model):
     observation_type = models.ForeignKey(ObservationType)
@@ -393,5 +395,7 @@ class Site(models.Model):
     notes = models.CharField(max_length=254)
     geom = models.TextField() # This field type is a guess.
     class Meta:
-        db_table = u'site'
+        db_table = 'gem\".\"site'
+
+
 

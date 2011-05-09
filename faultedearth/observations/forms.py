@@ -23,3 +23,4 @@ class ObsFormDisplacement (forms.Form):
 class Observation(forms.ModelForm):
     class Meta:
         model = TempFormSlip
+    

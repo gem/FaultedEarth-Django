@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from observations.models import TempFormSlip
-from observations.models import FaultSummary, ObservationType, Slip, Site, SlipType
+from geonode.observations.models import TempFormSlip
+from geonode.observations.models import FaultSummary, ObservationType, Slip, Site, SlipType
 
 class ObsFormSlip (forms.Form):
     slip_type = forms.IntegerField()

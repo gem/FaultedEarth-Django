@@ -1,6 +1,6 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
-from faultedearth.observations.forms import ObsFormSlip, ObsFormDisplacement, Observation
+from observations.forms import ObsFormSlip, ObsFormDisplacement, Observation
 from django.template import RequestContext
 
 # Views for the faulted_earth db             

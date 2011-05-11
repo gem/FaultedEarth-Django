@@ -92,7 +92,7 @@ DATABASE_SCHEMA = 'GEM'
 
 TEMPLATE_DIRS = (
     "/Users/benwyss/Projects/FaultedEarth-Django/geonode/observations/templates",
-    # '/geonode/observations/templates
+    # '/geonode/observations/templates'
     #cwd,
     #cwd+'/templates'
 )

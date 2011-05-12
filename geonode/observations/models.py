@@ -4,7 +4,7 @@ from django.forms import ModelForm
 #temp observation db
 #_______________________________________
 
-class TempFormSlip(models.Model):
+class Observations(models.Model):
     OBS_TYPE = (
         ('0','Displacement'),
         ('1','Event'),
@@ -19,8 +19,12 @@ class TempFormSlip(models.Model):
     slipType = models.CharField(max_length=1, choices=SLIP_TYPE, default='0')
     hv_ratio = models.CharField(max_length=100, default='1:3.75')
     rake = models.CharField(max_length=100)
-    net_slip_rate = models.CharField(max_length=100, default='pref, min, max')
-    dip_slip_rate = models.CharField(max_length=100, default='pref, min, max')
+    net_slip_rate_min = models.CharField(max_length=100, default='min')
+    net_slip_rate_max = models.CharField(max_length=100, default='max')
+    net_slip_rate_pref = models.CharField(max_length=100, default='pref')
+    dip_slip_rate_min = models.CharField(max_length=100, default='min')
+    dip_slip_rate_max = models.CharField(max_length=100, default='max')
+    dip_slip_rate_pref = models.CharField(max_length=100, default='pref')
     marker_age = models.CharField(max_length=100)
     SLIP_RATE_CAT = (
         ('0','0.001 <0.01'),
@@ -33,11 +37,15 @@ class TempFormSlip(models.Model):
         ('7','100 <200'),
     )
     slip_rate_category = models.CharField(max_length=10, choices=SLIP_RATE_CAT, default='0')
-    strike_slip_rate = models.CharField(max_length=100, default='pref, min, max')
-    vertical_slip_rate = models.CharField(max_length=100, default='pref, min, max')
+    strike_slip_rate_min = models.CharField(max_length=100, default='min')
+    strike_slip_rate_max = models.CharField(max_length=100, default='max')
+    strike_slip_rate_pref = models.CharField(max_length=100, default='pref')
+    vertical_slip_rate_min = models.CharField(max_length=100, default='min')
+    vertical_slip_rate_max = models.CharField(max_length=100, default='max')
+    vertical_slip_rate_pref = models.CharField(max_length=100, default='pref')
     site = models.CharField(max_length=100, default='-42.375, 176.543')
     notes = models.TextField()
- 
+"""
 class TempFormDisp(models.Model):
     OBS_TYPE = (
         ('0','Displacement'),
@@ -67,7 +75,9 @@ class TempFormDisp(models.Model):
     vertical_slip_rate = models.CharField(max_length=100, default='pref, min, max')
     site = models.CharField(max_length=100, default='-42.375, 176.543')
     notes = models.TextField()
+"""
 
+"""
 # faulted_earth db
 #_______________________________________
 
@@ -397,5 +407,5 @@ class Site(models.Model):
     class Meta:
         db_table = 'gem\".\"site'
 
-
+"""
 

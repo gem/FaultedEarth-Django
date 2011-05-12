@@ -1,9 +1,10 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
-from geonode.observations.forms import ObsFormSlip, ObsFormDisplacement, Observation
+from geonode.observations.forms import Observation
 from django.template import RequestContext
 
-# Views for the faulted_earth db             
+# Views for the original faulted_earth db  
+"""           
 def obs_form_slip (request):
     if request.method == 'GET':
         form = ObsFormSlip()
@@ -31,8 +32,9 @@ def obs_form_displacement (request):
             initial={'subject': 'I love your site!'}
         )
     return render_to_response('obsform_displacement.html', {'form': form})
-    
-#views for the observation temp db
+"""
+   
+#views for the observation db
 def obsform(request):
     if request.method == 'POST':
         form = Observation(request.POST)

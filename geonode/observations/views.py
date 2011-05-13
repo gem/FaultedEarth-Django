@@ -46,6 +46,6 @@ def obsform(request):
                 context_instance=RequestContext(request))
     else:
         form = Observation(
-            initial={'subject': 'I love your site!'}
+            initial={'subject': 'form was not submitted'}
         )
     return render_to_response('obsform_form.html', {'form': form})

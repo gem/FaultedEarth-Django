@@ -75,6 +75,8 @@ class TempFormDisp(models.Model):
     vertical_slip_rate = models.CharField(max_length=100, default='pref, min, max')
     site = models.CharField(max_length=100, default='-42.375, 176.543')
     notes = models.TextField()
+    class Meta:
+        db_table = 'gem\".\"observations_observations'
 """
 
 """

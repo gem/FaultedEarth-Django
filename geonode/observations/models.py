@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import ModelForm
 
 #temp observation db
 #_______________________________________

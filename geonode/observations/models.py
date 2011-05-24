@@ -59,5 +59,11 @@ class Observations(models.Model):
     site = models.CharField(max_length=100, default='-42.375, 176.543', 
     blank=True)
     notes = models.TextField(blank=True)
+    summary_id = models.CharField(max_length=100, default='-1', blank=True)
     class Meta:
         db_table = 'gem\".\"observations_observations'
+  
+class FaultSummary(models.Model):
+    name = models.IntegerField(max_length=100, default='-1', blank=True)
+    class Meta:
+        db_table = 'gem\".\"fault_summary'

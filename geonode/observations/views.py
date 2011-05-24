@@ -1,8 +1,6 @@
-from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response
 from geonode.observations.forms import Observation
 from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
 
 # Views for the original faulted_earth db  
 """           
@@ -42,10 +40,9 @@ def obsform(request):
         if form.is_valid():
             form.save()
             return render_to_response("obsform_form.html",
-                {'form': form},
+                      {'form': form,
+                       'success' : 'Your observation was saved'},
                 context_instance=RequestContext(request))
     else:
-        form = Observation(
-            initial={'subject': 'I love your site!'}
-        )
+        form = Observation()
     return render_to_response('obsform_form.html', {'form': form})

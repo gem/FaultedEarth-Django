@@ -64,6 +64,7 @@ class Observations(models.Model):
         db_table = 'gem\".\"observations_observations'
   
 class FaultSummary(models.Model):
+    fid = models.IntegerField()
     name = models.IntegerField(max_length=100, default='-1', blank=True)
     class Meta:
         db_table = 'gem\".\"fault_summary'

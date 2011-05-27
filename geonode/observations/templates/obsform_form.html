@@ -15,7 +15,11 @@
             Please correct the error{{ form.errors|pluralize }} below.
         </p>
     {% endif %}	
-    <form action="" method="post">
+    {% if form.instance.id and form.instance.summary_id %}
+    <form action="/edit/{{ form.instance.id }}/summary_id/{{ form.instance.summary_id }}" method="post">
+    {% else %}
+    <form action="/edit" method="post">
+    {% endif %}
 	{% csrf_token %}
         <div class="field">
 			<p style="font-family:tahoma; font-size:12px;">
@@ -115,6 +119,8 @@
             {{ form.notes }}
         </p>
         </div>
+        {{ form.summary_id.as_hidden }}
+        {{ form.id.as_hidden }}
  		</p>
         <input type="submit" value="Submit">
         <input type="reset" value="Clear">

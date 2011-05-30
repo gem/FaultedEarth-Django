@@ -26,7 +26,7 @@ def new(request, summary_id):
     o = models.Observations(summary_id=summary_id)
     o.save()
 
-    return HttpResponseRedirect('/edit/%s/summary_id/%s' % (o.id, o.summary_id))
+    return HttpResponseRedirect('/observations/obsform/edit/%s/summary_id/%s' % (o.id, o.summary_id))
 
 
 def edit(request, observation_id, summary_id):

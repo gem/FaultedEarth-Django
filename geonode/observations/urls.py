@@ -1,10 +1,8 @@
 from django.conf.urls.defaults import *
-from geonode.observations.views import obsform
 
 urlpatterns = patterns('geonode.observations.views',
-    url(r'^obsform/new$', obsform),
-    url(r'^obsform/$', obsform),
-    (r'^(?P<mapid>\d+)/view$', 'view'),
-    #(r'^admin/', include(admin.site.urls)),
+   (r'^obsform/edit/(?P<observation_id>\d+)/summary_id/(?P<summary_id>\d+)$',
+        'edit'),
+   (r'^obsform/new/summary_id/(?P<summary_id>\d+)$',
+        'new'),
 )
-

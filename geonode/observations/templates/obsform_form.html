@@ -16,7 +16,7 @@
         </p>
     {% endif %}	
     {% if form.instance.id and form.instance.summary_id %}
-    <form action="/edit/{{ form.instance.id }}/summary_id/{{ form.instance.summary_id }}" method="post">
+    <form action="/observations/obsform/edit/{{ form.instance.id }}/summary_id/{{ form.instance.summary_id }}" method="post">
     {% else %}
     <form action="/edit" method="post">
     {% endif %}

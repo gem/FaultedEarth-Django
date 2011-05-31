@@ -14,19 +14,7 @@ class Observations(models.Model):
     observationType = models.CharField(max_length=1, choices=OBS_TYPE, 
     blank=True)
     SLIP_TYPE = (
-        ('0','Reverse'),
-        ('1','Thrust (dip <45º)'),
-        ('2','Normal'),
-        ('3','Dextral'),
-        ('4','Sinistral'),
-        ('5','Normal dextral'),
-        ('6','Normal sinistral'),
-        ('7','Reverse dextral'),
-        ('8','Reverse sinistral'),
-        ('9','Dextral normal'),
-        ('10','Dextral reverse'),
-        ('11','Sinistral reverse'),
-        ('12','Sinistral normal'),
+        ('0','Normal'),
     )
     slipType = models.CharField(max_length=1, choices=SLIP_TYPE,
                                blank=True)

@@ -15,7 +15,7 @@ class Observations(models.Model):
     blank=True)
     SLIP_TYPE = (
         ('0','Reverse'),
-        ('1','Thrust (dip <45\u00B0)'),
+        ('1','Thrust (dip <45)'),
         ('2','Normal'),
         ('3','Dextral'),
         ('4','Sinistral'),

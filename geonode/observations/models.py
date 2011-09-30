@@ -17,10 +17,113 @@
 # version 3 along with OpenQuake.  If not, see
 # <http://www.gnu.org/licenses/lgpl-3.0.txt> for a copy of the LGPLv3 License
 
-from django.db import models
+from django.contrib.gis.db import models
 
 #observation db
 
+class Fault(models.Model):
+	name = models.CharField(max_length=30)
+	length = models.FloatField()
+	strike = models.IntegerField()
+	episodi_is = models.CharField(max_length=30)
+	episodi_ac = models.CharField(max_length=30)
+	u_sm_d_min = models.FloatField()
+	u_sm_d_max = models.FloatField()
+	u_sm_d_pre = models.FloatField()
+	u_sm_d_com = models.FloatField()
+	low_d_min = models.FloatField()
+	low_d_max = models.FloatField()
+	low_d_pref = models.FloatField()
+	low_d_com = models.FloatField()
+	dip_min = models.IntegerField()
+	dip_maz = models.IntegerField()
+	dip_pref = models.IntegerField()
+	dip_com = models.IntegerField()
+	dip_dir = models.IntegerField()
+	down_thro = models.IntegerField()
+	slip_typ = models.CharField(max_length=30)
+	slip_com = models.IntegerField()
+	slip_r_min = models.IntegerField()
+	slip_r_max = models.IntegerField()
+	slip_r_pre = models.IntegerField()
+	slip_r_com = models.IntegerField()
+	aseis_slip = models.FloatField()
+	aseis_com = models.IntegerField()
+	dis_min = models.FloatField()
+	dis_max = models.FloatField()
+	dis_pref = models.FloatField()
+	re_int_min = models.IntegerField()
+	re_int_max = models.IntegerField()
+	re_int_pre = models.IntegerField()
+	mov_min = models.IntegerField()
+	mov_max = models.IntegerField()
+	mov_pref = models.IntegerField()
+	all_com = models.IntegerField()
+	compiler = models.CharField(max_length=30)
+	contrib = models.CharField(max_length=30)
+	created = models.DecimalField(max_digits=4, decimal_places=3)
+	
+	class Meta:
+		db_table = 'gem\".\"fault'
+	
+class FaultSection(models.Model):
+	fault = models.ForeignKey('Fault')
+	name = models.CharField(max_length=30)
+	length = models.FloatField()
+	strike = models.IntegerField()
+	episodi_is = models.CharField(max_length=30)
+	episodi_ac = models.CharField(max_length=30)
+	u_sm_d_min = models.FloatField()
+	u_sm_d_max = models.FloatField()
+	u_sm_d_pre = models.FloatField()
+	u_sm_d_com = models.FloatField()
+	low_d_min = models.FloatField()
+	low_d_max = models.FloatField()
+	low_d_pref = models.FloatField()
+	low_d_com = models.FloatField()
+	dip_min = models.IntegerField()
+	dip_maz = models.IntegerField()
+	dip_pref = models.IntegerField()
+	dip_com = models.IntegerField()
+	dip_dir = models.IntegerField()
+	down_thro = models.IntegerField()
+	slip_typ = models.CharField(max_length=30)
+	slip_com = models.IntegerField()
+	slip_r_min = models.IntegerField()
+	slip_r_max = models.IntegerField()
+	slip_r_pre = models.IntegerField()
+	slip_r_com = models.IntegerField()
+	aseis_slip = models.FloatField()
+	aseis_com = models.IntegerField()
+	dis_min = models.FloatField()
+	dis_max = models.FloatField()
+	dis_pref = models.FloatField()
+	re_int_min = models.IntegerField()
+	re_int_max = models.IntegerField()
+	re_int_pre = models.IntegerField()
+	mov_min = models.IntegerField()
+	mov_max = models.IntegerField()
+	mov_pref = models.IntegerField()
+	all_com = models.IntegerField()
+	compiler = models.CharField(max_length=30)
+	contrib = models.CharField(max_length=30)
+	created = models.DecimalField(max_digits=4, decimal_places=3)
+	
+	class Meta:
+		db_table = 'gem\".\"fault_section'	
+	
+class Trace(models.Model):
+	fault_section = models.ForeignKey('FaultSection')
+	fault_name = models.CharField(max_length=30)
+	loc_meth = models.CharField(max_length=30)
+	scale = models.IntegerField()
+	accuracy = models.IntegerField()
+	notes = models.TextField()
+	geom = models.MultiLineStringField(srid=4326)
+	
+	class Meta:
+		db_table = 'gem\".\"trace'
+	
 class Observations(models.Model):
     OBS_TYPE = (
         ('0','Displacement'),
@@ -84,5 +187,6 @@ class Observations(models.Model):
 class FaultSummary(models.Model):
     fid = models.IntegerField()
     name = models.IntegerField(max_length=100, default='-1', blank=True)
+
     class Meta:
         db_table = 'gem\".\"fault_summary'

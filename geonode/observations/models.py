@@ -21,8 +21,9 @@ from django.contrib.gis.db import models
 
 #observation db
 
+
 class FaultSource(models.Model):
-	name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
 	length_min = models.FloatField()
 	length_max = models.FloatField()
 	length_pre = models.FloatField()
@@ -169,7 +170,7 @@ class FaultSection(models.Model):
 	
 class Trace(models.Model):
 	tid = models.IntegerField()
-    name = models.IntegerField(max_length=100, default='-1', blank=True)
+	name = models.IntegerField(max_length=100, default='-1', blank=True)
 	fault_section = models.ForeignKey('FaultSection')
 	fault_name = models.CharField(max_length=30)
 	loc_meth = models.CharField(max_length=30)

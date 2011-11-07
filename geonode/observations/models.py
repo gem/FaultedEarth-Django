@@ -121,7 +121,7 @@ class Fault(models.Model):
 		db_table = 'gem\".\"fault'
 	
 class FaultSection(models.Model):
-	fault = models.ForeignKey('Fault')
+	fault = models.ManyToManyField('Fault')
 	name = models.CharField(max_length=30)
 	length_min = models.FloatField()
 	length_max = models.FloatField()
@@ -184,6 +184,7 @@ class Trace(models.Model):
 		
 class SiteObservation(models.Model):
 	geom = models.MultiLineStringField(srid=4326)
+	fault_section = models.ManyToManyField('FaultSection')
 	scale = models.IntegerField()
 	accuracy = models.IntegerField()
 	feature = models.CharField(max_length=30)

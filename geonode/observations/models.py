@@ -37,7 +37,7 @@ class FaultSource(models.Model):
     width = models.FloatField()
     area = models.FloatField()
     dip_min = models.IntegerField()
-    dip_maz = models.IntegerField()
+    dip_max = models.IntegerField()
     dip_pref = models.IntegerField()
     dip_com = models.IntegerField()
     dip_dir = models.IntegerField()
@@ -66,11 +66,17 @@ class FaultSource(models.Model):
     all_com = models.IntegerField()
     compiler = models.CharField(max_length=30)
     contrib = models.CharField(max_length=30)
-    geom = models.MultiLineStringField(srid=4326)
+    geom = models.PolygonField(srid=4326)
     created = models.DecimalField(max_digits=4, decimal_places=3)
 
     class Meta:
         db_table = 'gem\".\"fault_source'
+
+class FaultSourceTrace(models.Model):
+    geom = models.MultiLineStringField(srid=4326)
+
+    class Meta:
+        db_table = 'gem\".\"fault_source_trace'
 
 class Fault(models.Model):
     name = models.CharField(max_length=30)
@@ -89,7 +95,7 @@ class Fault(models.Model):
     low_d_pref = models.FloatField()
     low_d_com = models.FloatField()
     dip_min = models.IntegerField()
-    dip_maz = models.IntegerField()
+    dip_max = models.IntegerField()
     dip_pref = models.IntegerField()
     dip_com = models.IntegerField()
     dip_dir = models.IntegerField()
@@ -137,7 +143,7 @@ class FaultSection(models.Model):
     low_d_pref = models.FloatField()
     low_d_com = models.FloatField()
     dip_min = models.IntegerField()
-    dip_maz = models.IntegerField()
+    dip_max = models.IntegerField()
     dip_pref = models.IntegerField()
     dip_com = models.IntegerField()
     dip_dir = models.IntegerField()

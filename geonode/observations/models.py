@@ -184,8 +184,6 @@ class SiteObservation(models.Model):
     s_feature = models.CharField(max_length=30)
     notes = models.TextField()
 
-    class Meta:
-        db_table = 'gem\".\"site_observation'
 
 class Observations(models.Model):
     OBS_TYPE = (

@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'postgresql_psycopg2',
+        'ENGINE': 'django_schemata.postgresql_backend',
         'NAME': 'faulted_earth_kpanic',              # Or path to database file if using sqlite3.
         'USER': 'postgres',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
@@ -69,6 +69,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django_schemata.middleware.SchemataMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,7 +90,15 @@ ROOT_URLCONF = 'geonode.urls'
 #    "django.contrib.auth.context_processors.csrf",
 #)
 
-DATABASE_SCHEMA = 'GEM'
+SCHEMATA_DOMAINS = {
+    'localhost': {
+        'schema_name': 'gem',
+        'engine': 'django.contrib.gis.db.backends.postgis'
+    },
+    'django': {
+        'schema_name': 'public',
+    },
+}
 
 TEMPLATE_DIRS = (
     os.getcwd() + "/observations/templates",
@@ -104,7 +113,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django.contrib.gis',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'geonode.observations',
+    'south',
+    'django_schemata',
 )
+
+POSTGIS_VERSION = '1.5.3'
+
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2',
+}

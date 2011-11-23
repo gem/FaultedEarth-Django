@@ -23,7 +23,7 @@ from django.contrib.gis.db import models
 
 
 class FaultSource(models.Model):
-    name = models.CharField(max_length=30)
+    source_nm = models.CharField(max_length=30)
     length_min = models.FloatField()
     length_max = models.FloatField()
     length_pre = models.FloatField()
@@ -76,7 +76,7 @@ class FaultSourceTrace(models.Model):
 
 
 class Fault(models.Model):
-    name = models.CharField(max_length=30)
+    fault_name = models.CharField(max_length=30)
     length_min = models.FloatField()
     length_max = models.FloatField()
     length_pre = models.FloatField()
@@ -122,7 +122,7 @@ class Fault(models.Model):
 
 class FaultSection(models.Model):
     fault = models.ManyToManyField('Fault')
-    name = models.CharField(max_length=30)
+    sec_name = models.CharField(max_length=30)
     length_min = models.FloatField()
     length_max = models.FloatField()
     length_pre = models.FloatField()
@@ -167,29 +167,25 @@ class FaultSection(models.Model):
 
 
 class Trace(models.Model):
-    tid = models.IntegerField(blank=True,null=True)
-    name = models.IntegerField(max_length=100, default='-1', blank=True,
-            null=True)
+    tid = models.IntegerField()
     fault_section = models.ManyToManyField('FaultSection')
-    #fault_name = models.CharField(max_length=30, blank=True, null=True)
-    loc_meth = models.CharField(max_length=30, blank=True, null=True)
-    scale = models.IntegerField(blank=True, null=True)
-    t_feature = models.CharField(max_length=255, blank=True, null=True)
-    trace_name = models.CharField(max_length=255, blank=True, null=True)
-    geomor_exp = models.CharField(max_length=255, blank=True, null=True)
-    accuracy = models.IntegerField(blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
+    loc_meth = models.CharField(max_length=30)
+    scale = models.BigIntegerField()
+    accuracy = models.BigIntegerField()
+    notes = models.TextField()
     geom = models.MultiLineStringField(srid=4326)
 
 
 class SiteObservation(models.Model):
     geom = models.MultiLineStringField(srid=4326)
     fault_section = models.ManyToManyField('FaultSection')
-    scale = models.IntegerField()
-    accuracy = models.IntegerField()
-    feature = models.CharField(max_length=30)
+    scale = models.BigIntegerField()
+    accuracy = models.BigIntegerField()
+    s_feature = models.CharField(max_length=30)
     notes = models.TextField()
 
+    class Meta:
+        db_table = 'gem\".\"site_observation'
 
 class Observations(models.Model):
     OBS_TYPE = (

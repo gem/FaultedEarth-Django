@@ -93,7 +93,6 @@ ROOT_URLCONF = 'geonode.urls'
 SCHEMATA_DOMAINS = {
     'localhost': {
         'schema_name': 'gem',
-        'engine': 'django.contrib.gis.db.backends.postgis'
     },
     'django': {
         'schema_name': 'public',
@@ -126,3 +125,5 @@ POSTGIS_VERSION = '1.5.3'
 SOUTH_DATABASE_ADAPTERS = {
     'default': 'south.db.postgresql_psycopg2',
 }
+
+ORIGINAL_BACKEND = 'django.contrib.gis.db.backends.postgis'

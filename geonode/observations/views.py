@@ -48,8 +48,8 @@ def traces(request):
     if request.is_ajax():
         if request.method == 'PUT':
 
-            bla = request.raw_post_data
-            traces = serializers.deserialize('json', bla)
+            json_data = request.raw_post_data
+            traces = serializers.deserialize('json', json_data)
             json_serializer = serializers.get_serializer('json')()
             json_serializer.serialize(traces, ensure_ascii=False,
                     stream=response.content)

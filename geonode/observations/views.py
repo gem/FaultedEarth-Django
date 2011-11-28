@@ -24,7 +24,7 @@ from django.template import RequestContext
 from geonode.observations import models
 from django.views.decorators.csrf import csrf_exempt, csrf_response_exempt
 from django.http import HttpResponseRedirect, HttpResponse
-from django.core import serializers
+from django.utils import simplejson
 
 
 #views for the observation form
@@ -49,10 +49,12 @@ def traces(request):
         if request.method == 'PUT':
 
             json_data = request.raw_post_data
-            traces = serializers.deserialize('json', json_data)
-            json_serializer = serializers.get_serializer('json')()
-            json_serializer.serialize(traces, ensure_ascii=False,
-                    stream=response.content)
+
+            fault_section = models.FaultSection.objects.create()
+
+            for trace in simplejson.loads(json_data):
+                trace = models.Trace.objects.get(pk=trace.split('.')[1])
+                trace.fault_section.add(fault_section)
 
     return response
 

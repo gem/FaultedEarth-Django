@@ -7,29 +7,77 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.execute("""CREATE VIEW fault_section_view AS
-            SELECT s.id, s.sec_name, s.strike, s.episodi_is, s.episodi_ac,
-            s.u_sm_d_min, s.u_sm_d_max, s.u_sm_d_pre, s.u_sm_d_com,
-            s.low_d_min, s.low_d_max, s.low_d_pref, s.low_d_com, s.dip_min,
-            s.dip_max, s.dip_pref, s.dip_com, s.dip_dir, s.down_thro,
-            s.slip_typ, s.slip_com, s.slip_r_min, s.slip_r_max, s.slip_r_pre,
-            s.slip_r_com, s.aseis_slip, s.aseis_com, s.dis_min, s.dis_max,
-            s.dis_pref, s.re_int_min, s.re_int_max, s.re_int_pre, s.mov_min,
-            s.mov_max, s.mov_pref, s.all_com, s.compiler, s.contrib, s.created,
-            s.length_min, s.length_max, s.length_pre, t.geom FROM
-            observations_faultsection
-            s, observations_trace t WHERE (s.id = t.id)""")
 
-        db.execute("""CREATE view fault_view AS SELECT s.id, s.fault_name,
-        s.strike, s.episodi_is, s.episodi_ac, s.u_sm_d_min, s.u_sm_d_max,
-        s.u_sm_d_pre, s.u_sm_d_com, s.low_d_min, s.low_d_max, s.low_d_pref,
-        s.low_d_com, s.dip_min, s.dip_max, s.dip_pref, s.dip_com, s.dip_dir,
-        s.down_thro, s.slip_typ, s.slip_com, s.slip_r_min, s.slip_r_max,
-        s.slip_r_pre, s.slip_r_com, s.aseis_slip, s.aseis_com, s.dis_min,
-        s.dis_max, s.dis_pref, s.re_int_min, s.re_int_max, s.re_int_pre,
-        s.mov_min, s.mov_max, s.mov_pref, s.all_com, s.compiler, s.contrib,
-        s.created, s.length_min, s.length_max, s.length_pre, t.geom FROM
-        observations_fault s, observations_trace t WHERE s.id = t.id""")
+        # fault section view
+        db.execute("""SELECT observations_faultsection.id,
+        observations_faultsection.sec_name,
+        observations_faultsection.length_min,
+        observations_faultsection.length_max,
+        observations_faultsection.length_pre, observations_faultsecti
+        on.strike, observations_faultsection.episodi_is,
+        observations_faultsection.episodi_ac,
+        observations_faultsection.u_sm_d_min,
+        observations_faultsection.u_sm_d_max,
+        observations_faultsection.u_sm_d_pre, observatio
+        ns_faultsection.u_sm_d_com, observations_faultsection.low_d_min,
+        observations_faultsection.low_d_max,
+        observations_faultsection.low_d_pref
+        , observations_faultsection.low_d_com,
+        observations_faultsection.dip_min, observations_faultsection.dip_max,
+        observations_faultsection.dip_pref, observations_faultsection.dip_com,
+        observations_faultsection.dip_dir, observations_faultsection.down_thro,
+        observations_faultsection.slip_typ, observations_faultsection.slip_com,
+        observations_faultsection.slip_r_min,
+        observations_faultsection.slip_r_max,
+        observations_faultsection.slip_r_pre,
+        observations_faultsection.slip_r_com,
+        observations_faultsection.aseis_slip,
+        observations_faultsection.aseis_com, observations_faultsection.dis_min,
+        observations_faultsection.dis_max, observations_faultsection.dis_pref,
+        observations_faultsection.re_int_min,
+        observations_faultsection.re_int_max,
+        observations_faultsection.re_int_pre, observations_trace.geom,
+        observations_faultsection.mov_min, observations_faultsection.mov_max,
+        observations_faultsection.mov_pref, observations_faultsection.all_com,
+        observations_faultsection.compiler, observations_faultsection.contrib,
+        observations_faultsection.created
+           FROM gem.observations_faultsection
+              JOIN gem.observations_trace_fault_section ON
+              observations_faultsection.id =
+              observations_trace_fault_section.faultsection_id
+                 JOIN gem.observations_trace ON
+                 observations_trace_fault_section.trace_id =
+                 observations_trace.id""")
+
+
+        # fault view
+        db.execute("""SELECT observations_fault.id,
+        observations_fault.fault_name, observations_fault.length_min,
+        observations_fault.length_max, observations_fault.length_pre,
+        observations_fault.strike, observations_fault.episodi_is,
+        observations_fault.episodi_ac, observations_fault.u_sm_d_min,
+        observations_fault.u_sm_d_max, observations_fault.u_sm_d_pre,
+        observations_fault.u_sm_d_com, observations_fault.low_d_min,
+        observations_fault.low_d_max, observations_fault.low_d_pref,
+        observations_fault.low_d_com, observations_fault.dip_min,
+        observations_fault.dip_max, observations_fault.dip_pref,
+        observations_fault.dip_com, observations_fault.dip_dir,
+        observations_fault.down_thro, observations_fault.slip_typ,
+        observations_fault.slip_com, observations_fault.slip_r_min,
+        observations_fault.slip_r_max, observations_fault.slip_r_pre,
+        observations_fault.slip_r_com, observations_fault.aseis_slip,
+        observations_fault.aseis_com, observations_fault.dis_min,
+        observations_fault.dis_max, observations_fault.dis_pref,
+        observations_fault.re_int_min, observations_fault.re_int_max,
+        observations_fault.re_int_pre, observations_fault.mov_min,
+        observations_fault.mov_max, observations_fault.mov_pref,
+        observations_fault.all_com, observations_fault.compiler,
+        observations_fault.contrib, observations_fault.created
+           FROM gem.observations_fault
+              JOIN gem.observations_faultsection_fault ON observations_fault.id
+              = observations_faultsection_fault.fault_id
+                 JOIN gem.observations_faultsection ON observations_fault.id =
+                 observations_faultsection_fault.fault_id""")
 
 
     def backwards(self, orm):

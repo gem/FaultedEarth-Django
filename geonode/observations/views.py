@@ -58,6 +58,21 @@ def traces(request):
 
     return response
 
+def faultsection(request):
+    response = HttpResponse()
+    if request.is_ajax():
+        if request.method == 'PUT':
+
+            json_data = request.raw_post_data
+
+            fault = models.Fault.objects.create()
+
+            for fault_section in simplejson.loads(json_data):
+                fault_section = models.FaultSection.objects.get(
+                        pk=fault_section)
+                fault_section.fault.add(fault)
+
+    return response
 
 def new(request, summary_id):
     o = models.Observations(summary_id=summary_id)

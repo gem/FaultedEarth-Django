@@ -18,16 +18,11 @@
 # <http://www.gnu.org/licenses/lgpl-3.0.txt> for a copy of the LGPLv3 License
 
 from django import forms
-from django.forms import ModelForm
-from geonode.observations.models import Observations, FaultSummary, Fault, Trace
+from geonode.observations.models import Observations, Fault, Trace
 
 class Observation(forms.ModelForm):
     class Meta:
         model = Observations
-    
-class Summary(forms.ModelForm):
-    class Meta:
-        model = FaultSummary
 
 class Fault(forms.ModelForm):
     class Meta:

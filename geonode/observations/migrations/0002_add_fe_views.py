@@ -86,6 +86,9 @@ class Migration(SchemaMigration):
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
 
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+                'fault_view', 'simple_geom', '2', 4326,
+                'MULTILINESTRING')""");
 
     def backwards(self, orm):
         db.execute("DROP VIEW fault_section_view")

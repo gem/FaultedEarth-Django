@@ -67,9 +67,9 @@ def faultsection(request):
 
             fault = models.Fault.objects.create()
 
-            for fault_section in simplejson.loads(json_data):
+            for fault_section_id in simplejson.loads(json_data):
                 fault_section = models.FaultSection.objects.get(
-                        pk=fault_section)
+                        pk=fault_section_id)
                 fault_section.fault.add(fault)
 
     return response

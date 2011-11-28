@@ -48,10 +48,10 @@ class FaultSource(models.Model):
     rake_com = models.IntegerField()
     slip_typ = models.CharField(max_length=30)
     slip_com = models.IntegerField()
-    slip_r_min = models.IntegerField()
-    slip_r_max = models.IntegerField()
-    slip_r_pre = models.IntegerField()
-    slip_r_com = models.IntegerField()
+    slip_r_min = models.FloatField()
+    slip_r_max = models.FloatField()
+    slip_r_pre = models.FloatField()
+    slip_r_com = models.FloatField()
     magnitude = models.IntegerField()
     aseis_slip = models.FloatField()
     aseis_com = models.IntegerField()
@@ -69,10 +69,6 @@ class FaultSource(models.Model):
     contrib = models.CharField(max_length=30)
     geom = models.PolygonField(srid=4326)
     created = models.DecimalField(max_digits=4, decimal_places=3)
-
-
-class FaultSourceTrace(models.Model):
-    geom = models.MultiLineStringField(srid=4326)
 
 
 class Fault(models.Model):
@@ -99,10 +95,10 @@ class Fault(models.Model):
     down_thro = models.IntegerField(null=True, blank=True)
     slip_typ = models.CharField(max_length=30)
     slip_com = models.IntegerField(null=True, blank=True)
-    slip_r_min = models.IntegerField(null=True, blank=True)
-    slip_r_max = models.IntegerField(null=True, blank=True)
-    slip_r_pre = models.IntegerField(null=True, blank=True)
-    slip_r_com = models.IntegerField(null=True, blank=True)
+    slip_r_min = models.FloatField(null=True, blank=True)
+    slip_r_max = models.FloatField(null=True, blank=True)
+    slip_r_pre = models.FloatField(null=True, blank=True)
+    slip_r_com = models.FloatField(null=True, blank=True)
     aseis_slip = models.FloatField(null=True, blank=True)
     aseis_com = models.IntegerField(null=True, blank=True)
     dis_min = models.FloatField(null=True, blank=True)
@@ -119,6 +115,7 @@ class Fault(models.Model):
     contrib = models.CharField(max_length=30, null=True, blank=True)
     created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
+    simple_geom = models.MultiLineStringField(srid=4326)
 
 
 class FaultSection(models.Model):
@@ -146,10 +143,10 @@ class FaultSection(models.Model):
     down_thro = models.IntegerField(null=True, blank=True)
     slip_typ = models.CharField(max_length=30)
     slip_com = models.IntegerField(null=True, blank=True)
-    slip_r_min = models.IntegerField(null=True, blank=True)
-    slip_r_max = models.IntegerField(null=True, blank=True)
-    slip_r_pre = models.IntegerField(null=True, blank=True)
-    slip_r_com = models.IntegerField(null=True, blank=True)
+    slip_r_min = models.FloatField(null=True, blank=True)
+    slip_r_max = models.FloatField(null=True, blank=True)
+    slip_r_pre = models.FloatField(null=True, blank=True)
+    slip_r_com = models.FloatField(null=True, blank=True)
     aseis_slip = models.FloatField(null=True, blank=True)
     aseis_com = models.IntegerField(null=True, blank=True)
     dis_min = models.FloatField(null=True, blank=True)
@@ -212,8 +209,8 @@ class Observations(models.Model):
         ('11', 'Sinistral reverse'),
         ('12', 'Sinistral normal'),
     )
-    slipType = models.CharField(max_length=1, choices=SLIP_TYPE,
-                               blank=True)
+    slipType = models.CharField(max_length=2, choices=SLIP_TYPE,
+                                blank=True)
     hv_ratio = models.CharField(max_length=100, blank=True)
     rake = models.CharField(max_length=100, blank=True)
     net_slip_rate_min = models.CharField(max_length=100, blank=True)
@@ -244,8 +241,3 @@ class Observations(models.Model):
     site = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True)
     summary_id = models.CharField(max_length=100,  blank=True)
-
-
-class FaultSummary(models.Model):
-    fid = models.IntegerField()
-    name = models.IntegerField(max_length=100, default='-1', blank=True)

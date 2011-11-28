@@ -13,16 +13,17 @@ class Migration(SchemaMigration):
         observations_faultsection.sec_name,
         observations_faultsection.length_min,
         observations_faultsection.length_max,
-        observations_faultsection.length_pre, observations_faultsecti
-        on.strike, observations_faultsection.episodi_is,
+        observations_faultsection.length_pre,
+        observations_faultsection.strike, observations_faultsection.episodi_is,
         observations_faultsection.episodi_ac,
         observations_faultsection.u_sm_d_min,
         observations_faultsection.u_sm_d_max,
-        observations_faultsection.u_sm_d_pre, observatio
-        ns_faultsection.u_sm_d_com, observations_faultsection.low_d_min,
+        observations_faultsection.u_sm_d_pre,
+        observations_faultsection.u_sm_d_com,
+        observations_faultsection.low_d_min,
         observations_faultsection.low_d_max,
-        observations_faultsection.low_d_pref
-        , observations_faultsection.low_d_com,
+        observations_faultsection.low_d_pref,
+        observations_faultsection.low_d_com,
         observations_faultsection.dip_min, observations_faultsection.dip_max,
         observations_faultsection.dip_pref, observations_faultsection.dip_com,
         observations_faultsection.dip_dir, observations_faultsection.down_thro,

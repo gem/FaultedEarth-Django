@@ -71,10 +71,6 @@ class FaultSource(models.Model):
     created = models.DecimalField(max_digits=4, decimal_places=3)
 
 
-class FaultSourceTrace(models.Model):
-    geom = models.MultiLineStringField(srid=4326)
-
-
 class Fault(models.Model):
     fault_name = models.CharField(max_length=30, null=True, blank=True)
     length_min = models.FloatField(null=True, blank=True)
@@ -119,6 +115,7 @@ class Fault(models.Model):
     contrib = models.CharField(max_length=30, null=True, blank=True)
     created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
+    simple_geom = models.MultiLineStringField(srid=4326)
 
 
 class FaultSection(models.Model):
@@ -245,7 +242,3 @@ class Observations(models.Model):
     notes = models.TextField(blank=True)
     summary_id = models.CharField(max_length=100,  blank=True)
 
-
-class FaultSummary(models.Model):
-    fid = models.IntegerField()
-    name = models.IntegerField(max_length=100, default=-1, blank=True)

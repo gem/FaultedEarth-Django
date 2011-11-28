@@ -36,10 +36,10 @@ class Migration(SchemaMigration):
             ('rake_com', self.gf('django.db.models.fields.IntegerField')()),
             ('slip_typ', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('slip_com', self.gf('django.db.models.fields.IntegerField')()),
-            ('slip_r_min', self.gf('django.db.models.fields.IntegerField')()),
-            ('slip_r_max', self.gf('django.db.models.fields.IntegerField')()),
-            ('slip_r_pre', self.gf('django.db.models.fields.IntegerField')()),
-            ('slip_r_com', self.gf('django.db.models.fields.IntegerField')()),
+            ('slip_r_min', self.gf('django.db.models.fields.FloatField')()),
+            ('slip_r_max', self.gf('django.db.models.fields.FloatField')()),
+            ('slip_r_pre', self.gf('django.db.models.fields.FloatField')()),
+            ('slip_r_com', self.gf('django.db.models.fields.FloatField')()),
             ('magnitude', self.gf('django.db.models.fields.IntegerField')()),
             ('aseis_slip', self.gf('django.db.models.fields.FloatField')()),
             ('aseis_com', self.gf('django.db.models.fields.IntegerField')()),
@@ -59,13 +59,6 @@ class Migration(SchemaMigration):
             ('created', self.gf('django.db.models.fields.DecimalField')(max_digits=4, decimal_places=3)),
         ))
         db.send_create_signal('observations', ['FaultSource'])
-
-        # Adding model 'FaultSourceTrace'
-        db.create_table('observations_faultsourcetrace', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')()),
-        ))
-        db.send_create_signal('observations', ['FaultSourceTrace'])
 
         # Adding model 'Fault'
         db.create_table('observations_fault', (
@@ -93,10 +86,10 @@ class Migration(SchemaMigration):
             ('down_thro', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('slip_typ', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('slip_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_min', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_max', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_pre', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('slip_r_min', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_max', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_pre', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_com', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('aseis_slip', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('aseis_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('dis_min', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
@@ -112,6 +105,7 @@ class Migration(SchemaMigration):
             ('compiler', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('contrib', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('created', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=4, decimal_places=3, blank=True)),
+            ('simple_geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')()),
         ))
         db.send_create_signal('observations', ['Fault'])
 
@@ -141,10 +135,10 @@ class Migration(SchemaMigration):
             ('down_thro', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('slip_typ', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('slip_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_min', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_max', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_pre', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('slip_r_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('slip_r_min', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_max', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_pre', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
+            ('slip_r_com', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('aseis_slip', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
             ('aseis_com', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
             ('dis_min', self.gf('django.db.models.fields.FloatField')(null=True, blank=True)),
@@ -214,7 +208,7 @@ class Migration(SchemaMigration):
         db.create_table('observations_observations', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('observationType', self.gf('django.db.models.fields.CharField')(max_length=1, blank=True)),
-            ('slipType', self.gf('django.db.models.fields.CharField')(max_length=1, blank=True)),
+            ('slipType', self.gf('django.db.models.fields.CharField')(max_length=2, blank=True)),
             ('hv_ratio', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('rake', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
             ('net_slip_rate_min', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
@@ -237,22 +231,11 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('observations', ['Observations'])
 
-        # Adding model 'FaultSummary'
-        db.create_table('observations_faultsummary', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('fid', self.gf('django.db.models.fields.IntegerField')()),
-            ('name', self.gf('django.db.models.fields.IntegerField')(default='-1', max_length=100, blank=True)),
-        ))
-        db.send_create_signal('observations', ['FaultSummary'])
-
 
     def backwards(self, orm):
         
         # Deleting model 'FaultSource'
         db.delete_table('observations_faultsource')
-
-        # Deleting model 'FaultSourceTrace'
-        db.delete_table('observations_faultsourcetrace')
 
         # Deleting model 'Fault'
         db.delete_table('observations_fault')
@@ -277,9 +260,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Observations'
         db.delete_table('observations_observations')
-
-        # Deleting model 'FaultSummary'
-        db.delete_table('observations_faultsummary')
 
 
     models = {
@@ -317,11 +297,12 @@ class Migration(SchemaMigration):
             're_int_max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             're_int_min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             're_int_pre': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'simple_geom': ('django.contrib.gis.db.models.fields.MultiLineStringField', [], {}),
             'slip_com': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_com': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_pre': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_com': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_max': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_min': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_pre': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'slip_typ': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'strike': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'u_sm_d_com': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
@@ -365,10 +346,10 @@ class Migration(SchemaMigration):
             're_int_pre': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'sec_name': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'slip_com': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_com': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'slip_r_pre': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_com': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_max': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_min': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
+            'slip_r_pre': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'slip_typ': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'strike': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'u_sm_d_com': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
@@ -414,10 +395,10 @@ class Migration(SchemaMigration):
             're_int_min': ('django.db.models.fields.IntegerField', [], {}),
             're_int_pre': ('django.db.models.fields.IntegerField', [], {}),
             'slip_com': ('django.db.models.fields.IntegerField', [], {}),
-            'slip_r_com': ('django.db.models.fields.IntegerField', [], {}),
-            'slip_r_max': ('django.db.models.fields.IntegerField', [], {}),
-            'slip_r_min': ('django.db.models.fields.IntegerField', [], {}),
-            'slip_r_pre': ('django.db.models.fields.IntegerField', [], {}),
+            'slip_r_com': ('django.db.models.fields.FloatField', [], {}),
+            'slip_r_max': ('django.db.models.fields.FloatField', [], {}),
+            'slip_r_min': ('django.db.models.fields.FloatField', [], {}),
+            'slip_r_pre': ('django.db.models.fields.FloatField', [], {}),
             'slip_typ': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'source_nm': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'u_sm_d_com': ('django.db.models.fields.FloatField', [], {}),
@@ -425,17 +406,6 @@ class Migration(SchemaMigration):
             'u_sm_d_min': ('django.db.models.fields.FloatField', [], {}),
             'u_sm_d_pre': ('django.db.models.fields.FloatField', [], {}),
             'width': ('django.db.models.fields.FloatField', [], {})
-        },
-        'observations.faultsourcetrace': {
-            'Meta': {'object_name': 'FaultSourceTrace'},
-            'geom': ('django.contrib.gis.db.models.fields.MultiLineStringField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        'observations.faultsummary': {
-            'Meta': {'object_name': 'FaultSummary'},
-            'fid': ('django.db.models.fields.IntegerField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.IntegerField', [], {'default': "'-1'", 'max_length': '100', 'blank': 'True'})
         },
         'observations.observations': {
             'Meta': {'object_name': 'Observations'},
@@ -452,7 +422,7 @@ class Migration(SchemaMigration):
             'observationType': ('django.db.models.fields.CharField', [], {'max_length': '1', 'blank': 'True'}),
             'rake': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'site': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'slipType': ('django.db.models.fields.CharField', [], {'max_length': '1', 'blank': 'True'}),
+            'slipType': ('django.db.models.fields.CharField', [], {'max_length': '2', 'blank': 'True'}),
             'slip_rate_category': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
             'strike_slip_rate_max': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
             'strike_slip_rate_min': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),

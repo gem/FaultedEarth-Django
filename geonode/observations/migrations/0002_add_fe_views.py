@@ -95,8 +95,8 @@ class Migration(SchemaMigration):
         # simple geometry view
 
         db.execute("""CREATE VIEW gem.simple_geom_view AS
-                 SELECT fault.id, fault.fault_name, fault.simple_geom
-                 FROM gem.fault""")
+                 SELECT f.id, f.fault_name, f.simple_geom
+                 FROM gem.observations_fault f""")
 
         # manual observations_trace geometry table insert
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',

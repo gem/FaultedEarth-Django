@@ -9,7 +9,8 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # fault section view
-        db.execute("""SELECT observations_faultsection.id,
+        db.execute("""CREATE VIEW gem.fault_section_view AS
+        SELECT observations_faultsection.id,
         observations_faultsection.sec_name,
         observations_faultsection.length_min,
         observations_faultsection.length_max,
@@ -52,7 +53,8 @@ class Migration(SchemaMigration):
 
 
         # fault view
-        db.execute("""SELECT observations_fault.id,
+        db.execute("""CREATE VIEW gem.fault_view AS
+        SELECT observations_fault.id,
         observations_fault.fault_name, observations_fault.length_min,
         observations_fault.length_max, observations_fault.length_pre,
         observations_fault.strike, observations_fault.episodi_is,
@@ -79,6 +81,10 @@ class Migration(SchemaMigration):
               = observations_faultsection_fault.fault_id
                  JOIN gem.observations_faultsection ON observations_fault.id =
                  observations_faultsection_fault.fault_id""")
+
+        # manual observations_trace geometry table insert
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+                'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
 
 
     def backwards(self, orm):

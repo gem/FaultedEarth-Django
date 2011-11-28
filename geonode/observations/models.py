@@ -115,7 +115,7 @@ class Fault(models.Model):
     contrib = models.CharField(max_length=30, null=True, blank=True)
     created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
-    simple_geom = models.MultiLineStringField(srid=4326)
+    simple_geom = models.MultiLineStringField(srid=4326, null=True, blank=True)
 
 
 class FaultSection(models.Model):

@@ -105,7 +105,7 @@ class Migration(SchemaMigration):
             ('compiler', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('contrib', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('created', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=4, decimal_places=3, blank=True)),
-            ('simple_geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')()),
+            ('simple_geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')(null=True, blank=True)),
         ))
         db.send_create_signal('observations', ['Fault'])
 
@@ -297,7 +297,7 @@ class Migration(SchemaMigration):
             're_int_max': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             're_int_min': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             're_int_pre': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'simple_geom': ('django.contrib.gis.db.models.fields.MultiLineStringField', [], {}),
+            'simple_geom': ('django.contrib.gis.db.models.fields.MultiLineStringField', [], {'null': 'True', 'blank': 'True'}),
             'slip_com': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'slip_r_com': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'slip_r_max': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),

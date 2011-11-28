@@ -212,8 +212,8 @@ class Observations(models.Model):
         ('11', 'Sinistral reverse'),
         ('12', 'Sinistral normal'),
     )
-    slipType = models.CharField(max_length=1, choices=SLIP_TYPE,
-                               blank=True)
+    slipType = models.CharField(max_length=2, choices=SLIP_TYPE,
+                                blank=True)
     hv_ratio = models.CharField(max_length=100, blank=True)
     rake = models.CharField(max_length=100, blank=True)
     net_slip_rate_min = models.CharField(max_length=100, blank=True)
@@ -248,4 +248,4 @@ class Observations(models.Model):
 
 class FaultSummary(models.Model):
     fid = models.IntegerField()
-    name = models.IntegerField(max_length=100, default='-1', blank=True)
+    name = models.IntegerField(max_length=100, default=-1, blank=True)

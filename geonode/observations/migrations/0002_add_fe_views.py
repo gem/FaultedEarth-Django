@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
 
         # fault section view
         db.execute("""CREATE VIEW gem.fault_section_view AS
-                SELECT observations_faultsection.id,
+                SELECT DISTINCT observations_faultsection.id,
                 observations_faultsection.sec_name,
                 observations_faultsection.length_min,
                 observations_faultsection.length_max,
@@ -103,12 +103,13 @@ class Migration(SchemaMigration):
                 'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
-                'fault_view', 'simple_geom', '2', 4326,
+                'simple_geom_view', 'simple_geom', '2', 4326,
                 'MULTILINESTRING')""");
 
     def backwards(self, orm):
         db.execute("DROP VIEW fault_section_view")
         db.execute("DROP VIEW fault_view")
+        db.execute("DROP VIEW simple_geom_view")
 
 
     models = {

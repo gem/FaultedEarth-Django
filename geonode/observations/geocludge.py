@@ -25,8 +25,12 @@ from django.contrib.gis.geos.collections import Polygon
 from django.conf import settings
 
 
-def fault_poly_from_mls(fault_source_geom, dip, upp_seis_depth, low_seis_depth,
-                        grid_spacing):
+#: Value is in kilometers
+GRID_SPACING = 1.0
+
+
+def fault_poly_from_mls(fault_source_geom, dip,
+                        upp_seis_depth, low_seis_depth):
     """Given a fault source geometry (as a MultiLineString), dip, upper
     seismogenic depth, lower seismogenic depth, and grid spacing (in km),
     create a 3D polygon to represent the fault.
@@ -39,8 +43,6 @@ def fault_poly_from_mls(fault_source_geom, dip, upp_seis_depth, low_seis_depth,
         Upper seismogenic depth
     :param float low_seis_depth:
         Lower seismogenic depth
-    :param float grid_spacing:
-        Grid spacing in kilometers.
 
     :returns:
         3D polygon representing the complete fault geometry
@@ -68,7 +70,7 @@ def fault_poly_from_mls(fault_source_geom, dip, upp_seis_depth, low_seis_depth,
             fault_trace.add(loc)
 
     surface = SGS(fault_trace, dip, upp_seis_depth, low_seis_depth,
-                  grid_spacing)
+                  GRID_SPACING)
 
     # now we make a polygon with the perimeter coords:
     poly_coords = []

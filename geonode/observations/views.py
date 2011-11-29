@@ -19,12 +19,14 @@
 
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
-from geonode.observations.forms import Observation
 from django.template import RequestContext
-from geonode.observations import models
 from django.views.decorators.csrf import csrf_exempt, csrf_response_exempt
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
+
+from geonode.observations import models
+from geonode.observations.forms import Observation
+from geonode.observations.geocludge import fault_poly_from_mls
 
 
 #views for the observation form
@@ -73,6 +75,27 @@ def faultsection(request):
                 fault_section.fault.add(fault)
 
     return response
+
+
+def make_polygon(request):
+    response = HttpResponse()
+    if request.is_ajax():
+        if request.method == 'PUT':
+
+            json_data = simplejson.loads(request.raw_post_data)
+            name = json_data['name']
+            fault_id = json_data['fault_id']
+
+            fault = models.Fault.objects.get(pk=fault_id)
+
+            polygon = fault_poly_from_mls(fault.simple_geom)
+
+            models.FaultSource.objects.create(
+                fault=fault, source_nm=name, geom=polygon
+            )
+
+    return response
+
 
 def new(request, summary_id):
     o = models.Observations(summary_id=summary_id)

@@ -23,9 +23,10 @@ from geonode.observations.forms import Observation
 from django.template import RequestContext
 from geonode.observations import models
 from django.views.decorators.csrf import csrf_exempt, csrf_response_exempt
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils import simplejson
 
-   
+
 #views for the observation form
 def obsform(request):
     if request.method == 'POST':
@@ -41,15 +42,49 @@ def obsform(request):
     return render_to_response('obsform_form.html', {'form': form},
                               context_instance=RequestContext(request))
 
+def traces(request):
+
+    response = HttpResponse()
+    if request.is_ajax():
+        if request.method == 'PUT':
+
+            json_data = request.raw_post_data
+
+            fault_section = models.FaultSection.objects.create()
+
+            for trace in simplejson.loads(json_data):
+                trace = models.Trace.objects.get(pk=trace.split('.')[1])
+                trace.fault_section.add(fault_section)
+
+    return response
+
+def faultsection(request):
+    response = HttpResponse()
+    if request.is_ajax():
+        if request.method == 'PUT':
+
+            json_data = request.raw_post_data
+
+            fault = models.Fault.objects.create()
+
+            for fault_section_id in simplejson.loads(json_data):
+                fault_section = models.FaultSection.objects.get(
+                        pk=fault_section_id)
+                fault_section.fault.add(fault)
+
+    return response
+
 def new(request, summary_id):
     o = models.Observations(summary_id=summary_id)
     o.save()
 
-    return HttpResponseRedirect('/observations/obsform/edit/%s/summary_id/%s' % (o.id, o.summary_id))
+    return HttpResponseRedirect(
+            '/observations/obsform/edit/%s/summary_id/%s' %
+            (o.id, o.summary_id))
 
 
 def edit(request, observation_id, summary_id):
-    """  
+    """
     The view that returns the Id filed from the fault summary table.
     """
 
@@ -71,6 +106,6 @@ def edit(request, observation_id, summary_id):
         o.summary_id = summary_id
 
         form = Observation(instance=o)
-    
+
     return render_to_response('obsform_form.html', {'form' : form},
                               context_instance=RequestContext(request))

@@ -1,8 +1,8 @@
-This Django app contains the observation form for the Faulted Earth tool. 
+This Django app contains the observation form for the Faulted Earth tool.
 
 To deploy this app you have to integrate it in geonode. Which is composed of:
 
- * geonode (django framework) 
+ * geonode (django framework)
  * geoserver (the "mapserver" which provides all the layers/styling and mapping to db
    tables and much more)
  * a Client javascript app deployed through geoserver as a war
@@ -21,6 +21,11 @@ DEPENDENCIES:
         complete there will be no more need to use django-schemata, but this
         ticket is a work in progress since a lot of time, so I have chosen the
         django-schemata route.
+
+    * jpype
+    * opensha-lite.jar
+
+        to be placed in /usr/share/java
 
 INSTALLATION (rough instructions)
 

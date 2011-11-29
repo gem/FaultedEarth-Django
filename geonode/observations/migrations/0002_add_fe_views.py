@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
 
         # fault section view
         db.execute("""CREATE VIEW gem.fault_section_view AS
-                SELECT observations_faultsection.id,
+                SELECT DISTINCT observations_faultsection.id,
                 observations_faultsection.sec_name,
                 observations_faultsection.length_min,
                 observations_faultsection.length_max,

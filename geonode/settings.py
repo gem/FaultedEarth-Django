@@ -127,3 +127,5 @@ SOUTH_DATABASE_ADAPTERS = {
 }
 
 ORIGINAL_BACKEND = 'django.contrib.gis.db.backends.postgis'
+
+GEOCLUDGE_JAR_PATH = '/usr/share/java'

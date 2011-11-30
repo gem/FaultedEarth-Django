@@ -26,7 +26,7 @@ from django.utils import simplejson
 
 from geonode.observations import models
 from geonode.observations.forms import Observation
-from geonode.observations.geocludge import fault_poly_from_mls
+from geonode.observations.utils import fault_poly_from_mls
 
 
 #views for the observation form

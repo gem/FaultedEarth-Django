@@ -66,32 +66,58 @@ GROUP BY
         # fault view
         db.execute("""CREATE VIEW gem.fault_view AS
                 SELECT observations_fault.id,
-                observations_fault.fault_name, observations_fault.length_min,
-                observations_fault.length_max, observations_fault.length_pre,
-                observations_fault.strike, observations_fault.episodi_is,
-                observations_fault.episodi_ac, observations_fault.u_sm_d_min,
-                observations_fault.u_sm_d_max, observations_fault.u_sm_d_pre,
-                observations_fault.u_sm_d_com, observations_fault.low_d_min,
-                observations_fault.low_d_max, observations_fault.low_d_pref,
-                observations_fault.low_d_com, observations_fault.dip_min,
-                observations_fault.dip_max, observations_fault.dip_pref,
-                observations_fault.dip_com, observations_fault.dip_dir,
-                observations_fault.down_thro, observations_fault.slip_typ,
-                observations_fault.slip_com, observations_fault.slip_r_min,
-                observations_fault.slip_r_max, observations_fault.slip_r_pre,
-                observations_fault.slip_r_com, observations_fault.aseis_slip,
-                observations_fault.aseis_com, observations_fault.dis_min,
-                observations_fault.dis_max, observations_fault.dis_pref,
-                observations_fault.re_int_min, observations_fault.re_int_max,
-                observations_fault.re_int_pre, observations_fault.mov_min,
-                observations_fault.mov_max, observations_fault.mov_pref,
-                observations_fault.all_com, observations_fault.compiler,
-                observations_fault.contrib, observations_fault.created
-                    FROM gem.observations_fault
-                JOIN gem.observations_faultsection_fault ON
-                observations_fault.id = observations_faultsection_fault.fault_id
-                JOIN gem.observations_faultsection ON observations_fault.id =
-                observations_faultsection_fault.fault_id""")
+        observations_fault.fault_name, observations_fault.length_min,
+        observations_fault.length_max, observations_fault.length_pre,
+        observations_fault.strike, observations_fault.episodi_is,
+        observations_fault.episodi_ac, observations_fault.u_sm_d_min,
+        observations_fault.u_sm_d_max, observations_fault.u_sm_d_pre,
+        observations_fault.u_sm_d_com, observations_fault.low_d_min,
+        observations_fault.low_d_max, observations_fault.low_d_pref,
+        observations_fault.low_d_com, observations_fault.dip_min,
+        observations_fault.dip_max, observations_fault.dip_pref,
+        observations_fault.dip_com, observations_fault.dip_dir,
+        observations_fault.down_thro, observations_fault.slip_typ,
+        observations_fault.slip_com, observations_fault.slip_r_min,
+        observations_fault.slip_r_max, observations_fault.slip_r_pre,
+        observations_fault.slip_r_com, observations_fault.aseis_slip,
+        observations_fault.aseis_com, observations_fault.dis_min,
+        observations_fault.dis_max, observations_fault.dis_pref,
+        observations_fault.re_int_min, observations_fault.re_int_max,
+        observations_fault.re_int_pre, observations_fault.mov_min,
+        observations_fault.mov_max, observations_fault.mov_pref,
+        observations_fault.all_com, observations_fault.compiler,
+        observations_fault.contrib, observations_fault.created,
+        St_Multi(St_Union(observations_trace.geom)) as geom
+FROM gem.observations_fault
+JOIN gem.observations_faultsection_fault ON
+observations_fault.id = observations_faultsection_fault.fault_id
+JOIN gem.observations_faultsection ON observations_faultsection.id =
+observations_faultsection_fault.faultsection_id
+JOIN gem.observations_trace_fault_section ON gem.observations_faultsection.id = observations_trace_fault_section.faultsection_id
+JOIN gem.observations_trace ON gem.observations_trace.id = observations_trace_fault_section.trace_id
+GROUP BY
+        observations_fault.id,
+        observations_fault.fault_name, observations_fault.length_min,
+        observations_fault.length_max, observations_fault.length_pre,
+        observations_fault.strike, observations_fault.episodi_is,
+        observations_fault.episodi_ac, observations_fault.u_sm_d_min,
+        observations_fault.u_sm_d_max, observations_fault.u_sm_d_pre,
+        observations_fault.u_sm_d_com, observations_fault.low_d_min,
+        observations_fault.low_d_max, observations_fault.low_d_pref,
+        observations_fault.low_d_com, observations_fault.dip_min,
+        observations_fault.dip_max, observations_fault.dip_pref,
+        observations_fault.dip_com, observations_fault.dip_dir,
+        observations_fault.down_thro, observations_fault.slip_typ,
+        observations_fault.slip_com, observations_fault.slip_r_min,
+        observations_fault.slip_r_max, observations_fault.slip_r_pre,
+        observations_fault.slip_r_com, observations_fault.aseis_slip,
+        observations_fault.aseis_com, observations_fault.dis_min,
+        observations_fault.dis_max, observations_fault.dis_pref,
+        observations_fault.re_int_min, observations_fault.re_int_max,
+        observations_fault.re_int_pre, observations_fault.mov_min,
+        observations_fault.mov_max, observations_fault.mov_pref,
+        observations_fault.all_com, observations_fault.compiler,
+        observations_fault.contrib, observations_fault.created""")
 
         # simple geometry view
 
@@ -99,13 +125,17 @@ GROUP BY
                  SELECT f.id, f.fault_name, f.simple_geom
                  FROM gem.observations_fault f""")
 
-        # manual observations_trace geometry table insert
+        # "publish" the geometries into public.geometry_columns
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+        'fault_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
+
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'simple_geom_view', 'simple_geom', '2', 4326,
                 'MULTILINESTRING')""");
+
 
     def backwards(self, orm):
         db.execute("DROP VIEW fault_section_view")

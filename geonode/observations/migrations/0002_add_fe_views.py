@@ -10,56 +10,57 @@ class Migration(SchemaMigration):
 
         # fault section view
         db.execute("""CREATE VIEW gem.fault_section_view AS
-                SELECT DISTINCT observations_faultsection.id,
-                observations_faultsection.sec_name,
-                observations_faultsection.length_min,
-                observations_faultsection.length_max,
-                observations_faultsection.length_pre,
-                observations_faultsection.strike,
-                observations_faultsection.episodi_is,
-                observations_faultsection.episodi_ac,
-                observations_faultsection.u_sm_d_min,
-                observations_faultsection.u_sm_d_max,
-                observations_faultsection.u_sm_d_pre,
-                observations_faultsection.u_sm_d_com,
-                observations_faultsection.low_d_min,
-                observations_faultsection.low_d_max,
-                observations_faultsection.low_d_pref,
-                observations_faultsection.low_d_com,
-                observations_faultsection.dip_min,
-                observations_faultsection.dip_max,
-                observations_faultsection.dip_pref,
-                observations_faultsection.dip_com,
-                observations_faultsection.dip_dir,
-                observations_faultsection.down_thro,
-                observations_faultsection.slip_typ,
-                observations_faultsection.slip_com,
-                observations_faultsection.slip_r_min,
-                observations_faultsection.slip_r_max,
-                observations_faultsection.slip_r_pre,
-                observations_faultsection.slip_r_com,
-                observations_faultsection.aseis_slip,
-                observations_faultsection.aseis_com,
-                observations_faultsection.dis_min,
-                observations_faultsection.dis_max,
-                observations_faultsection.dis_pref,
-                observations_faultsection.re_int_min,
-                observations_faultsection.re_int_max,
-                observations_faultsection.re_int_pre, observations_trace.geom,
-                observations_faultsection.mov_min,
-                observations_faultsection.mov_max,
-                observations_faultsection.mov_pref,
-                observations_faultsection.all_com,
-                observations_faultsection.compiler,
-                observations_faultsection.contrib,
-                observations_faultsection.created
-                   FROM gem.observations_faultsection
-                      JOIN gem.observations_trace_fault_section ON
-                      observations_faultsection.id =
-                      observations_trace_fault_section.faultsection_id
-                         JOIN gem.observations_trace ON
-                         observations_trace_fault_section.trace_id =
-                         observations_trace.id""")
+SELECT
+    observations_faultsection.id, observations_faultsection.sec_name,
+    observations_faultsection.length_min, observations_faultsection.length_max,
+    observations_faultsection.length_pre, observations_faultsection.strike,
+    observations_faultsection.episodi_is, observations_faultsection.episodi_ac,
+    observations_faultsection.u_sm_d_min, observations_faultsection.u_sm_d_max,
+    observations_faultsection.u_sm_d_pre, observations_faultsection.u_sm_d_com,
+    observations_faultsection.low_d_min, observations_faultsection.low_d_max,
+    observations_faultsection.low_d_pref, observations_faultsection.low_d_com,
+    observations_faultsection.dip_min, observations_faultsection.dip_max,
+    observations_faultsection.dip_pref, observations_faultsection.dip_com,
+    observations_faultsection.dip_dir, observations_faultsection.down_thro,
+    observations_faultsection.slip_typ, observations_faultsection.slip_com,
+    observations_faultsection.slip_r_min, observations_faultsection.slip_r_max,
+    observations_faultsection.slip_r_pre, observations_faultsection.slip_r_com,
+    observations_faultsection.aseis_slip, observations_faultsection.aseis_com,
+    observations_faultsection.dis_min, observations_faultsection.dis_max,
+    observations_faultsection.dis_pref, observations_faultsection.re_int_min,
+    observations_faultsection.re_int_max, observations_faultsection.re_int_pre,
+    observations_faultsection.mov_min,
+    observations_faultsection.mov_max, observations_faultsection.mov_pref,
+    observations_faultsection.all_com, observations_faultsection.compiler,
+    observations_faultsection.contrib, observations_faultsection.created,
+    ST_Multi(ST_Union(observations_trace.geom)) as geom
+FROM gem.observations_faultsection
+JOIN gem.observations_trace_fault_section ON observations_faultsection.id = observations_trace_fault_section.faultsection_id
+JOIN gem.observations_trace ON observations_trace_fault_section.trace_id = observations_trace.id
+GROUP BY
+    observations_faultsection.id, observations_faultsection.sec_name,
+    observations_faultsection.length_min, observations_faultsection.length_max,
+    observations_faultsection.length_pre, observations_faultsection.strike,
+    observations_faultsection.episodi_is, observations_faultsection.episodi_ac,
+    observations_faultsection.u_sm_d_min, observations_faultsection.u_sm_d_max,
+    observations_faultsection.u_sm_d_pre, observations_faultsection.u_sm_d_com,
+    observations_faultsection.low_d_min, observations_faultsection.low_d_max,
+    observations_faultsection.low_d_pref, observations_faultsection.low_d_com,
+    observations_faultsection.dip_min, observations_faultsection.dip_max,
+    observations_faultsection.dip_pref, observations_faultsection.dip_com,
+    observations_faultsection.dip_dir, observations_faultsection.down_thro,
+    observations_faultsection.slip_typ, observations_faultsection.slip_com,
+    observations_faultsection.slip_r_min, observations_faultsection.slip_r_max,
+    observations_faultsection.slip_r_pre, observations_faultsection.slip_r_com,
+    observations_faultsection.aseis_slip, observations_faultsection.aseis_com,
+    observations_faultsection.dis_min, observations_faultsection.dis_max,
+    observations_faultsection.dis_pref, observations_faultsection.re_int_min,
+    observations_faultsection.re_int_max, observations_faultsection.re_int_pre,
+    observations_faultsection.mov_min,
+    observations_faultsection.mov_max, observations_faultsection.mov_pref,
+    observations_faultsection.all_com, observations_faultsection.compiler,
+    observations_faultsection.contrib, observations_faultsection.created;
+""")
 
 
         # fault view

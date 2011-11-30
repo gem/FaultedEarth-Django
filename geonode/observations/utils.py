@@ -17,16 +17,12 @@
 # <http://www.gnu.org/licenses/lgpl-3.0.txt> for a copy of the LGPLv3 License
 #
 
-# I take no responsibility for writing this
-
 import jpype
 import shapely
 from django.contrib.gis.geos.collections import Polygon
 from django.conf import settings
 
-
-#: Value is in kilometers
-GRID_SPACING = 1.0
+from geonode.observations import models
 
 
 def fault_poly_from_mls(fault_source_geom, dip,
@@ -49,6 +45,11 @@ def fault_poly_from_mls(fault_source_geom, dip,
     :rtype:
         :class:`django.contrib.gis.geos.collections.Polygon`
     """
+    # I take no responsibility for writing this
+
+    #: Value is in kilometers
+    GRID_SPACING = 1.0
+
     if not jpype.isJVMStarted():
         # start jvm once
         jpype.startJVM(jpype.getDefaultJVMPath(),
@@ -82,3 +83,15 @@ def fault_poly_from_mls(fault_source_geom, dip,
         poly_coords.append((lon, lat, depth))
 
     return Polygon(poly_coords)
+
+
+def create_faultsource(fault, name):
+    polygon = fault_poly_from_mls(fault.simple_geom)
+
+    faultsource = models.FaultSource.objects.create(
+        fault=fault, source_nm=name, geom=polygon
+    )
+
+    # TODO: assign attribute values
+
+    return faultsource

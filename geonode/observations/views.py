@@ -26,7 +26,7 @@ from django.utils import simplejson
 
 from geonode.observations import models
 from geonode.observations.forms import Observation
-from geonode.observations.utils import fault_poly_from_mls
+from geonode.observations.utils import create_faultsource
 
 
 #views for the observation form
@@ -85,15 +85,8 @@ def faultsource(request):
             json_data = simplejson.loads(request.raw_post_data)
             name = json_data['name']
             fault_id = json_data['fault_id']
-
             fault = models.Fault.objects.get(pk=fault_id)
-
-            polygon = fault_poly_from_mls(fault.simple_geom)
-
-            faultsource = models.FaultSource.objects.create(
-                fault=fault, source_nm=name, geom=polygon
-            )
-            # TODO: assign attribute values
+            create_faultsource(fault, name)
 
     return response
 

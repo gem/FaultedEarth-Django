@@ -26,7 +26,7 @@ from django.utils import simplejson
 
 from geonode.observations import models
 from geonode.observations.forms import Observation
-from geonode.observations.geocludge import fault_poly_from_mls
+from geonode.observations.utils import create_faultsource
 
 
 #views for the observation form
@@ -77,7 +77,7 @@ def faultsection(request):
     return response
 
 
-def make_polygon(request):
+def faultsource(request):
     response = HttpResponse()
     if request.is_ajax():
         if request.method == 'PUT':
@@ -85,14 +85,8 @@ def make_polygon(request):
             json_data = simplejson.loads(request.raw_post_data)
             name = json_data['name']
             fault_id = json_data['fault_id']
-
             fault = models.Fault.objects.get(pk=fault_id)
-
-            polygon = fault_poly_from_mls(fault.simple_geom)
-
-            models.FaultSource.objects.create(
-                fault=fault, source_nm=name, geom=polygon
-            )
+            create_faultsource(fault, name)
 
     return response
 

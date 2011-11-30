@@ -91,8 +91,8 @@ GROUP BY
 FROM gem.observations_fault
 JOIN gem.observations_faultsection_fault ON
 observations_fault.id = observations_faultsection_fault.fault_id
-JOIN gem.observations_faultsection ON observations_fault.id =
-observations_faultsection_fault.fault_id
+JOIN gem.observations_faultsection ON observations_faultsection.id =
+observations_faultsection_fault.faultsection_id
 JOIN gem.observations_trace_fault_section ON gem.observations_faultsection.id = observations_trace_fault_section.faultsection_id
 JOIN gem.observations_trace ON gem.observations_trace.id = observations_trace_fault_section.trace_id
 GROUP BY

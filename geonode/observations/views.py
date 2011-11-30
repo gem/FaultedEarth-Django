@@ -77,7 +77,7 @@ def faultsection(request):
     return response
 
 
-def make_polygon(request):
+def faultsource(request):
     response = HttpResponse()
     if request.is_ajax():
         if request.method == 'PUT':
@@ -90,9 +90,10 @@ def make_polygon(request):
 
             polygon = fault_poly_from_mls(fault.simple_geom)
 
-            models.FaultSource.objects.create(
+            faultsource = models.FaultSource.objects.create(
                 fault=fault, source_nm=name, geom=polygon
             )
+            # TODO: assign attribute values
 
     return response
 

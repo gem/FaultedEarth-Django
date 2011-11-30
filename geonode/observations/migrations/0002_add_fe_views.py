@@ -125,13 +125,17 @@ GROUP BY
                  SELECT f.id, f.fault_name, f.simple_geom
                  FROM gem.observations_fault f""")
 
-        # manual observations_trace geometry table insert
+        # "publish" the geometries into public.geometry_columns
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+        'fault_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
+
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'simple_geom_view', 'simple_geom', '2', 4326,
                 'MULTILINESTRING')""");
+
 
     def backwards(self, orm):
         db.execute("DROP VIEW fault_section_view")

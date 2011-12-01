@@ -25,49 +25,77 @@ from django.contrib.gis.db import models
 class FaultSource(models.Model):
     fault = models.ForeignKey('Fault')
     source_nm = models.CharField(max_length=30)
+
     length_min = models.FloatField(null=True, blank=True)
     length_max = models.FloatField(null=True, blank=True)
     length_pre = models.FloatField(null=True, blank=True)
+
+    # Upper seismogenic depth
     u_sm_d_min = models.FloatField(null=True, blank=True)
     u_sm_d_max = models.FloatField(null=True, blank=True)
     u_sm_d_pre = models.FloatField(null=True, blank=True)
     u_sm_d_com = models.FloatField(null=True, blank=True)
+
+    # Lower seismogenic depth
     low_d_min = models.FloatField(null=True, blank=True)
     low_d_max = models.FloatField(null=True, blank=True)
     low_d_pref = models.FloatField(null=True, blank=True)
     low_d_com = models.FloatField(null=True, blank=True)
-    width = models.FloatField(null=True, blank=True)
-    area = models.FloatField(null=True, blank=True)
+
+    width_min = models.FloatField(null=True, blank=True)
+    width_max = models.FloatField(null=True, blank=True)
+    width_pref = models.FloatField(null=True, blank=True)
+
+    area_min = models.FloatField(null=True, blank=True)
+    area_max = models.FloatField(null=True, blank=True)
+    area_pref = models.FloatField(null=True, blank=True)
+
     dip_min = models.IntegerField(null=True, blank=True)
     dip_max = models.IntegerField(null=True, blank=True)
     dip_pref = models.IntegerField(null=True, blank=True)
     dip_com = models.IntegerField(null=True, blank=True)
     dip_dir = models.IntegerField(null=True, blank=True)
-    rake_min = models.IntegerField(null=True, blank=True)
-    rake_max = models.IntegerField(null=True, blank=True)
-    rake_pref = models.IntegerField(null=True, blank=True)
-    rake_com = models.IntegerField(null=True, blank=True)
+
     slip_typ = models.CharField(max_length=30, default='')
     slip_com = models.IntegerField(null=True, blank=True)
     slip_r_min = models.FloatField(null=True, blank=True)
     slip_r_max = models.FloatField(null=True, blank=True)
     slip_r_pre = models.FloatField(null=True, blank=True)
     slip_r_com = models.FloatField(null=True, blank=True)
-    magnitude = models.IntegerField(null=True, blank=True)
+
+    # Magnitude
+    mag_min = models.FloatField(null=True, blank=True)
+    mag_max = models.FloatField(null=True, blank=True)
+    mag_pref = models.FloatField(null=True, blank=True)
+
+    # Seismic moment
+    mom_min = models.FloatField(null=True, blank=True)
+    mom_max = models.FloatField(null=True, blank=True)
+    mom_pref = models.FloatField(null=True, blank=True)
+
     aseis_slip = models.FloatField(null=True, blank=True)
     aseis_com = models.IntegerField(null=True, blank=True)
+
+    # Displacement
     dis_min = models.FloatField(null=True, blank=True)
     dis_max = models.FloatField(null=True, blank=True)
     dis_pref = models.FloatField(null=True, blank=True)
+
+    # Recurrence Interval
     re_int_min = models.IntegerField(null=True, blank=True)
     re_int_max = models.IntegerField(null=True, blank=True)
     re_int_pre = models.IntegerField(null=True, blank=True)
+
+    # Age of last movement
     mov_min = models.IntegerField(null=True, blank=True)
     mov_max = models.IntegerField(null=True, blank=True)
     mov_pref = models.IntegerField(null=True, blank=True)
+
     all_com = models.IntegerField(null=True, blank=True)
+
     compiler = models.CharField(max_length=30, default='')
     contrib = models.CharField(max_length=30, default='')
+
     geom = models.PolygonField(srid=4326)
     created = models.DecimalField(max_digits=4, decimal_places=3,
                                   null=True, blank=True)

@@ -5,4 +5,5 @@ urlpatterns = patterns('geonode.observations.views',
         'edit'),
    (r'^obsform/new/summary_id/(?P<summary_id>\d+)$',
         'new'),
+   (r'^observations/', include('observations.urls')),
 )

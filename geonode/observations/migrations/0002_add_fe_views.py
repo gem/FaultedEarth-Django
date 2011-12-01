@@ -62,6 +62,41 @@ GROUP BY
     observations_faultsection.contrib, observations_faultsection.created;
 """)
 
+       # fault section view update rule
+       db.execute("""
+CREATE RULE
+    fault_section_view_update
+AS ON UPDATE TO
+    gem.fault_section_view
+DO INSTEAD
+UPDATE
+    gem.observations_faultsection
+SET
+    sec_name = NEW.sec_name,
+    length_min = NEW.length_min, length_max = NEW.length_max,
+    length_pre = NEW.length_pre, strike = NEW.strike,
+    episodi_is = NEW.episodi_is, episodi_ac = NEW.episodi_ac,
+    u_sm_d_min = NEW.u_sm_d_min, u_sm_d_max = NEW.u_sm_d_max,
+    u_sm_d_pre = NEW.u_sm_d_pre, u_sm_d_com = NEW.u_sm_d_com,
+    low_d_min = NEW.low_d_min, low_d_max = NEW.low_d_max,
+    low_d_pref = NEW.low_d_pref, low_d_com = NEW.low_d_com,
+    dip_min = NEW.dip_min, dip_max = NEW.dip_max,
+    dip_pref = NEW.dip_pref, dip_com = NEW.dip_com,
+    dip_dir = NEW.dip_dir, down_thro = NEW.down_thro,
+    slip_typ = NEW.slip_typ, slip_com = NEW.slip_com,
+    slip_r_min = NEW.slip_r_min, slip_r_max = NEW.slip_r_max,
+    slip_r_pre = NEW.slip_r_pre, slip_r_com = NEW.slip_r_com,
+    aseis_slip = NEW.aseis_slip, aseis_com = NEW.aseis_com,
+    dis_min = NEW.dis_min, dis_max = NEW.dis_max,
+    dis_pref = NEW.dis_pref, re_int_min = NEW.re_int_min,
+    re_int_max = NEW.re_int_max, re_int_pre = NEW.re_int_pre,
+    mov_min = NEW.mov_min,
+    mov_max = NEW.mov_max, mov_pref = NEW.mov_pref,
+    all_com = NEW.all_com, compiler = NEW.compiler,
+    contrib = NEW.contrib, created = NEW.created
+WHERE
+    id = OLD.id;
+""")
 
         # fault view
         db.execute("""CREATE VIEW gem.fault_view AS

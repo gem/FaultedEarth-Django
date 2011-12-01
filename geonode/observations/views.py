@@ -55,8 +55,14 @@ def traces(request):
             fault_section = models.FaultSection.objects.create()
 
             for trace in simplejson.loads(json_data):
-                trace = models.Trace.objects.get(pk=trace.split('.')[1])
-                trace.fault_section.add(fault_section)
+                if isinstance(trace, dict):
+                    fault_section.sec_name = trace['name']
+                else:
+                    trace = models.Trace.objects.get(pk=trace.split('.')[1])
+                    trace.fault_section.add(fault_section)
+
+            fault_section.save()
+
 
     return response
 

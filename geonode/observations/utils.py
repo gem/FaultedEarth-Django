@@ -17,6 +17,8 @@
 # <http://www.gnu.org/licenses/lgpl-3.0.txt> for a copy of the LGPLv3 License
 #
 
+import math
+
 import jpype
 import shapely
 from django.contrib.gis.geos.collections import Polygon
@@ -86,12 +88,70 @@ def fault_poly_from_mls(fault_source_geom, dip,
 
 
 def create_faultsource(fault, name):
-    polygon = fault_poly_from_mls(fault.simple_geom)
-
-    faultsource = models.FaultSource.objects.create(
-        fault=fault, source_nm=name, geom=polygon
+    polygon = fault_poly_from_mls(
+        fault.simple_geom, fault.dip_pref,
+        fault.u_sm_d_pre, fault.low_d_pref
     )
 
-    # TODO: assign attribute values
+    sin = lambda degrees: math.sin(math.radians(degrees))
+
+    # these attributes are copied from the corresponding fault
+    verbatim_attributes = """
+    length_min length_max length_pre
+    u_sm_d_min u_sm_d_max u_sm_d_pre u_sm_d_com
+    low_d_min low_d_max low_d_pref low_d_com
+    dip_min dip_max dip_pref dip_com dip_dir
+    slip_typ slip_com slip_r_min slip_r_max slip_r_pre slip_r_com
+    aseis_slip aseis_com
+    mov_min mov_max mov_pref
+    """.strip().split()
+
+    a = dict((attrib_name, getattr(fault, attrib_name))
+             for attrib_name in verbatim_attributes)
+    a.update(dict(
+        width_min=(a['low_d_min'] - a['u_sm_d_max']) / sin(a['dip_max']),
+        width_max=(a['low_d_max'] - a['u_sm_d_min']) / sin(a['dip_min']),
+        width_pre=(a['low_d_pref'] - a['u_sm_d_pre']) / sin(a['dip_pref']),
+    ))
+    a.update(dict(
+        area_pref=a['length_pre'] * a['width_pre'],
+        area_min=a['length_min'] * a['width_min'],
+        area_max=a['length_max'] * a['width_max'],
+    ))
+    a.update(dict(
+        # Magnitude scaling law is "New Zealand -- oblique slip"
+        mag_min=(4.18
+                 + 4.0 / 3.0 * math.log10(a['length_min'])
+                 + 2.0 / 3.0 * math.log10(a['width_min'])),
+        max_max=(4.18
+                 + 4.0 / 3.0 * math.log10(a['length_max'])
+                 + 2.0 / 3.0 * math.log10(a['width_max'])),
+        mag_pref=(4.18
+                  + 4.0 / 3.0 * math.log10(a['length_pre'])
+                  + 2.0 / 3.0 * math.log10(a['width_pre'])),
+    ))
+    a.update(dict(
+        mom_min=10 ** (16.05 + (1.5 * a['mag_min'])),
+        mom_max=10 ** (16.05 + (1.5 * a['mag_max'])),
+        mom_pref=10 ** (16.05 + (1.5 * a['mag_pref'])),
+    ))
+    a.update(dict(
+        dis_min=a['mom_min'] / (3.0e11 * a['area_min'] * 1.0e10) * 0.01,
+        dis_max=a['mom_max'] / (3.0e11 * a['area_max'] * 1.0e10) * 0.01,
+        dis_pref=a['mom_pref'] / (3.0e11 * a['area_pref'] * 1.0e10) * 0.01,
+    ))
+    a.update(dict(
+        re_int_min=a['dis_min'] * 1e3 / a['slip_r_max'],
+        re_int_max=a['dis_max'] * 1e3 / a['slip_r_min'],
+        re_int_pre=a['dis_pref'] * 1e3 / a['slip_r_pre'],
+    ))
+    a.update(dict(
+        all_com=(a['u_sm_d_com'] + a['low_d_com'] + a['dip_com'] + a['dip_dir']
+                 + a['slip_com'] + 5 * a['slip_r_com'] + a['aseis_slip']) / 11
+    ))
+
+    faultsource = models.FaultSource.objects.create(
+        fault=fault, source_nm=name, geom=polygon, **a
+    )
 
     return faultsource

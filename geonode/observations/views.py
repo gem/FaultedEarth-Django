@@ -47,43 +47,41 @@ def obsform(request):
 def traces(request):
 
     response = HttpResponse()
-    if request.is_ajax():
-        if request.method == 'PUT':
+    if request.method == 'PUT':
 
-            json_data = request.raw_post_data
+        json_data = request.raw_post_data
 
-            fault_section = models.FaultSection.objects.create()
+        fault_section = models.FaultSection.objects.create()
 
-            for trace in simplejson.loads(json_data):
-                if isinstance(trace, dict):
-                    fault_section.sec_name = trace['name']
-                else:
-                    trace = models.Trace.objects.get(pk=trace.split('.')[1])
-                    trace.fault_section.add(fault_section)
+        for trace in simplejson.loads(json_data):
+            if isinstance(trace, dict):
+                fault_section.sec_name = trace['name']
+            else:
+                trace = models.Trace.objects.get(pk=trace.split('.')[1])
+                trace.fault_section.add(fault_section)
 
-            fault_section.save()
+        fault_section.save()
 
 
     return response
 
 def faultsection(request):
     response = HttpResponse()
-    if request.is_ajax():
-        if request.method == 'PUT':
+    if request.method == 'PUT':
 
-            json_data = request.raw_post_data
+        json_data = request.raw_post_data
 
-            fault = models.Fault.objects.create()
+        fault = models.Fault.objects.create()
 
-            for fault_section in simplejson.loads(json_data):
-                if isinstance(fault_section, dict):
-                    fault.fault_name = fault_section['name']
-                else:
-                    fault_section = models.FaultSection.objects.get(
-                            pk=fault_section)
-                    fault_section.fault.add(fault)
+        for fault_section in simplejson.loads(json_data):
+            if isinstance(fault_section, dict):
+                fault.fault_name = fault_section['name']
+            else:
+                fault_section = models.FaultSection.objects.get(
+                        pk=fault_section)
+                fault_section.fault.add(fault)
 
-            fault.save()
+        fault.save()
 
     return response
 

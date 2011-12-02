@@ -91,17 +91,16 @@ def faultsection(request):
 
 
 def faultsource(request):
-    response = HttpResponse()
     if request.is_ajax():
         if request.method == 'PUT':
 
             json_data = simplejson.loads(request.raw_post_data)
             name = json_data['name']
-            fault_id = json_data['fault_id']
+            fault_id = json_data['fault_id'].split('.')[-1]
             fault = models.Fault.objects.get(pk=fault_id)
             create_faultsource(fault, name)
 
-    return response
+    return HttpResponse('ok')
 
 
 def new(request, summary_id):

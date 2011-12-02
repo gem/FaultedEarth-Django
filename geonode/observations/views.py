@@ -86,19 +86,19 @@ def faultsection(request):
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM set_fault_simplegeom(%s)", [fault.pk])
+    transaction.commit_unless_managed()
 
     return response
 
 
 def faultsource(request):
-    if request.is_ajax():
-        if request.method == 'PUT':
+    if request.method == 'PUT':
 
-            json_data = simplejson.loads(request.raw_post_data)
-            name = json_data['name']
-            fault_id = json_data['fault_id'].split('.')[-1]
-            fault = models.Fault.objects.get(pk=fault_id)
-            create_faultsource(fault, name)
+        json_data = simplejson.loads(request.raw_post_data)
+        name = json_data['name']
+        fault_id = json_data['fault_id'].split('.')[-1]
+        fault = models.Fault.objects.get(pk=fault_id)
+        create_faultsource(fault, name)
 
     return HttpResponse('ok')
 

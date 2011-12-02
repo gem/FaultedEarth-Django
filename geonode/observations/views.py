@@ -86,6 +86,7 @@ def faultsection(request):
 
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM set_fault_simplegeom(%s)", [fault.pk])
+    transaction.commit_unless_managed()
 
     return response
 

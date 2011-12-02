@@ -194,7 +194,7 @@ class Migration(SchemaMigration):
         # Adding model 'SiteObservation'
         db.create_table('observations_siteobservation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')()),
+            ('geom', self.gf('django.contrib.gis.db.models.fields.Point')()),
             ('scale', self.gf('django.db.models.fields.BigIntegerField')()),
             ('accuracy', self.gf('django.db.models.fields.BigIntegerField')()),
             ('s_feature', self.gf('django.db.models.fields.CharField')(max_length=30)),

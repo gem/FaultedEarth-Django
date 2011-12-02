@@ -206,7 +206,7 @@ class Trace(models.Model):
 
 
 class SiteObservation(models.Model):
-    geom = models.MultiLineStringField(srid=4326)
+    geom = models.PointField(srid=4326)
     fault_section = models.ManyToManyField('FaultSection')
     scale = models.BigIntegerField()
     accuracy = models.BigIntegerField()

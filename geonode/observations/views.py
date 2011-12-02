@@ -23,6 +23,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt, csrf_response_exempt
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import simplejson
+from django.db import connection, transaction
 
 from geonode.observations import models
 from geonode.observations.forms import Observation
@@ -82,6 +83,9 @@ def faultsection(request):
                 fault_section.fault.add(fault)
 
         fault.save()
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM set_fault_simplegeom(%s)", [fault.pk])
 
     return response
 

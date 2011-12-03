@@ -62,8 +62,8 @@ GROUP BY
     observations_faultsection.contrib, observations_faultsection.created;
 """)
 
-       # fault section view update rule
-       db.execute("""
+        # fault section view update rule
+        db.execute("""
 CREATE RULE
     fault_section_view_update
 AS ON UPDATE TO
@@ -162,14 +162,14 @@ GROUP BY
 
         # "publish" the geometries into public.geometry_columns
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
-                'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""");
+                'fault_section_view', 'geom', '2', 4326, 'MULTILINESTRING')""")
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
         'fault_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'simple_geom_view', 'simple_geom', '2', 4326,
-                'MULTILINESTRING')""");
+                'MULTILINESTRING')""")
 
 
     def backwards(self, orm):

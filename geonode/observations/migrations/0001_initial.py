@@ -194,7 +194,7 @@ class Migration(SchemaMigration):
         # Adding model 'SiteObservation'
         db.create_table('observations_siteobservation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('geom', self.gf('django.contrib.gis.db.models.fields.MultiLineStringField')()),
+            ('geom', self.gf('django.contrib.gis.db.models.fields.PointField')()),
             ('scale', self.gf('django.db.models.fields.BigIntegerField')()),
             ('accuracy', self.gf('django.db.models.fields.BigIntegerField')()),
             ('s_feature', self.gf('django.db.models.fields.CharField')(max_length=30)),
@@ -448,7 +448,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'SiteObservation'},
             'accuracy': ('django.db.models.fields.BigIntegerField', [], {}),
             'fault_section': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['observations.FaultSection']", 'symmetrical': 'False'}),
-            'geom': ('django.contrib.gis.db.models.fields.MultiLineStringField', [], {}),
+            'geom': ('django.contrib.gis.db.models.fields.PointField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'notes': ('django.db.models.fields.TextField', [], {}),
             's_feature': ('django.db.models.fields.CharField', [], {'max_length': '30'}),

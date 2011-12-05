@@ -25,6 +25,12 @@ class Migration(SchemaMigration):
         VALUES
             ('gem', 'fault_section_view', 'id')
         """)
+        db.execute("""
+        INSERT INTO
+            gem.gt_pk_metadata (table_schema, table_name, pk_column)
+        VALUES
+            ('gem', 'fault_view', 'id')
+        """)
 
 
     def backwards(self, orm):

@@ -57,10 +57,10 @@ def fault_poly_from_mls(fault_source_geom, dip,
         jpype.startJVM(jpype.getDefaultJVMPath(),
                        "-Djava.ext.dirs=%s" % settings.GEOCLUDGE_JAR_PATH)
 
-    FT = jp.JClass('org.opensha.sha.faultSurface.FaultTrace')
-    LOC = jp.JClass('org.opensha.commons.geo.Location')
-    LOC_LIST = jp.JClass('org.opensha.commons.geo.LocationList')
-    SGS = jp.JClass('org.opensha.sha.faultSurface.StirlingGriddedSurface')
+    FT = jpype.JClass('org.opensha.sha.faultSurface.FaultTrace')
+    LOC = jpype.JClass('org.opensha.commons.geo.Location')
+    LOC_LIST = jpype.JClass('org.opensha.commons.geo.LocationList')
+    SGS = jpype.JClass('org.opensha.sha.faultSurface.StirlingGriddedSurface')
 
     coords = fault_source_geom.coords
 

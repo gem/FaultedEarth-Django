@@ -96,7 +96,7 @@ class FaultSource(models.Model):
     compiler = models.CharField(max_length=30, default='')
     contrib = models.CharField(max_length=30, default='')
 
-    geom = models.PolygonField(srid=4326)
+    geom = models.PolygonField(srid=4326, dim=3)
     created = models.DecimalField(max_digits=4, decimal_places=3,
                                   null=True, blank=True)
 

@@ -72,7 +72,8 @@ def fault_poly_from_mls(fault_source_geom, dip,
             loc = LOC(lat, lon)
             fault_trace.add(loc)
 
-    surface = SGS(fault_trace, dip, upp_seis_depth, low_seis_depth,
+    surface = SGS(fault_trace, float(dip),
+                  float(upp_seis_depth), float(low_seis_depth),
                   GRID_SPACING)
 
     # now we make a polygon with the perimeter coords:
@@ -111,10 +112,10 @@ def create_faultsource(fault, name):
     a.update(dict(
         width_min=(a['low_d_min'] - a['u_sm_d_max']) / sin(a['dip_max']),
         width_max=(a['low_d_max'] - a['u_sm_d_min']) / sin(a['dip_min']),
-        width_pre=(a['low_d_pref'] - a['u_sm_d_pre']) / sin(a['dip_pref']),
+        width_pref=(a['low_d_pref'] - a['u_sm_d_pre']) / sin(a['dip_pref']),
     ))
     a.update(dict(
-        area_pref=a['length_pre'] * a['width_pre'],
+        area_pref=a['length_pre'] * a['width_pref'],
         area_min=a['length_min'] * a['width_min'],
         area_max=a['length_max'] * a['width_max'],
     ))
@@ -123,12 +124,12 @@ def create_faultsource(fault, name):
         mag_min=(4.18
                  + 4.0 / 3.0 * math.log10(a['length_min'])
                  + 2.0 / 3.0 * math.log10(a['width_min'])),
-        max_max=(4.18
+        mag_max=(4.18
                  + 4.0 / 3.0 * math.log10(a['length_max'])
                  + 2.0 / 3.0 * math.log10(a['width_max'])),
         mag_pref=(4.18
                   + 4.0 / 3.0 * math.log10(a['length_pre'])
-                  + 2.0 / 3.0 * math.log10(a['width_pre'])),
+                  + 2.0 / 3.0 * math.log10(a['width_pref'])),
     ))
     a.update(dict(
         mom_min=10 ** (16.05 + (1.5 * a['mag_min'])),

@@ -196,7 +196,6 @@ class FaultSection(models.Model):
 
 
 class Trace(models.Model):
-    tid = models.IntegerField()
     fault_section = models.ManyToManyField('FaultSection')
     loc_meth = models.CharField(max_length=30)
     scale = models.BigIntegerField()

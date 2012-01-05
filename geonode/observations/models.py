@@ -98,7 +98,7 @@ class FaultSource(models.Model):
     contrib = models.CharField(max_length=30, default='')
 
     geom = models.PolygonField(srid=4326, dim=3)
-    created = models.DecimalField(decimal_places=3,
+    created = models.DecimalField(max_digits=4, decimal_places=3,
                                   null=True, blank=True)
 
 
@@ -144,7 +144,7 @@ class Fault(models.Model):
     all_com = models.IntegerField(null=True, blank=True)
     compiler = models.CharField(max_length=30, null=True, blank=True)
     contrib = models.CharField(max_length=30, null=True, blank=True)
-    created = models.DecimalField(decimal_places=3, null=True,
+    created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
     simple_geom = models.MultiLineStringField(srid=4326, null=True, blank=True)
 
@@ -192,7 +192,7 @@ class FaultSection(models.Model):
     all_com = models.IntegerField(null=True, blank=True)
     compiler = models.CharField(max_length=30, null=True, blank=True)
     contrib = models.CharField(max_length=30, null=True, blank=True)
-    created = models.DecimalField(decimal_places=3, null=True,
+    created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
 
 

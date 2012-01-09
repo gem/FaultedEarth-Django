@@ -255,7 +255,7 @@ WHERE
 
         # fold view
         db.execute("""CREATE VIEW gem.fold_view AS
-SELECT observations_fold.id,
+SELECT observations_fold.id, observations_fold.aseis_slip,
     observations_fold.fold_name, observations_fold.length_min,
     observations_fold.length_max, observations_fold.length_pre,
     observations_fold.strike, observations_fold.episodi_is,
@@ -283,7 +283,7 @@ observations_foldsection_fold.foldsection_id
 JOIN gem.observations_foldtrace_fold_section ON gem.observations_foldsection.id = observations_foldtrace_fold_section.foldsection_id
 JOIN gem.observations_foldtrace ON gem.observations_foldtrace.id = observations_foldtrace_fold_section.foldtrace_id
 GROUP BY
-    observations_fold.id,
+    observations_fold.id, observations_fold.aseis_slip,
         observations_fold.fold_name, observations_fold.length_min,
         observations_fold.length_max, observations_fold.length_pre,
         observations_fold.strike, observations_fold.episodi_is,

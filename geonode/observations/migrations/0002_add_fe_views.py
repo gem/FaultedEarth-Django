@@ -348,6 +348,12 @@ WHERE
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
         'fault_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
+        
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+        'fold_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
+        
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+        'fold_section_view', 'geom', 2, 4326, 'MULTILINESTRING')""")
 
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'simple_geom_view', 'simple_geom', '2', 4326,

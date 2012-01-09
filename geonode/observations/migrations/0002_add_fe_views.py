@@ -327,8 +327,8 @@ SET
     asymm_dir = NEW.asymm_dir, slip_typ = NEW.slip_typ,
     slip_com = NEW.slip_com, slip_r_min = NEW.slip_r_min,
     slip_r_max = NEW.slip_r_max, slip_r_pre = NEW.slip_r_pre,
-    slip_r_com = NEW.slip_r_com, aseis_slip = NEW.aseis_slip,
-    dis_min = NEW.dis_min, re_int_min = NEW.re_int_min, 
+    slip_r_com = NEW.slip_r_com, aseis_slip = NEW.aseis_slip, 
+    re_int_min = NEW.re_int_min, 
     re_int_max = NEW.re_int_max, re_int_pre = NEW.re_int_pre, 
     all_com = NEW.all_com, compiler = NEW.compiler,
     contrib = NEW.contrib, created = NEW.created

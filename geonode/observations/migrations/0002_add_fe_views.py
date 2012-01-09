@@ -280,7 +280,7 @@ JOIN gem.observations_foldsection_fold ON
 observations_fold.id = observations_foldsection_fold.fold_id
 JOIN gem.observations_foldsection ON observations_foldsection.id =
 observations_foldsection_fold.foldsection_id
-JOIN gem.observations_foldtrace_fold_section ON gem.observations_foldsection.id = observations_trace_fold_section.foldsection_id
+JOIN gem.observations_foldtrace_fold_section ON gem.observations_foldsection.id = observations_foldtrace_fold_section.foldsection_id
 JOIN gem.observations_foldtrace ON gem.observations_foldtrace.id = observations_foldtrace_fold_section.foldtrace_id
 GROUP BY
     observations_fold.id,

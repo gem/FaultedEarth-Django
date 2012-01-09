@@ -274,7 +274,7 @@ SELECT observations_fold.id,
     observations_fold.re_int_max, observations_fold.re_int_pre,
     observations_fold.all_com, observations_fold.compiler,
     observations_fold.contrib, observations_fold.created,
-    St_Multi(St_Union(observations_trace.geom)) as geom
+    St_Multi(St_Union(observations_foldtrace.geom)) as geom
 FROM gem.observations_fold
 JOIN gem.observations_foldsection_fold ON
 observations_fold.id = observations_foldsection_fold.fold_id

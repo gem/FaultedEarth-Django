@@ -196,7 +196,7 @@ WHERE
 SELECT
     observations_foldsection.id, observations_foldsection.sec_name,
     observations_foldsection.length_min, observations_foldsection.length_max,
-    observations_foldsection.length_pre, observations_foldsection.strike,
+    observations_foldsection.length_pre,
     observations_foldsection.episodi_is, observations_foldsection.episodi_ac,
     observations_foldsection.fold_type, observations_foldsection.symmetry,
     observations_foldsection.asymm_dir, observations_foldsection.dip_axial,

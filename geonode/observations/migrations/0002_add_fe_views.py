@@ -345,8 +345,8 @@ WHERE
          # fold simple geometry view
 
         db.execute("""CREATE VIEW gem.simple_fold_geom_view AS
-                  SELECT f.id, f.fold_name, f.simple_fold_geom
-                  FROM gem.observations_fold f""")
+                  SELECT g.id, g.fold_name, g.simple_fold_geom
+                  FROM gem.observations_fold g""")
 
         # "publish" the geometries into public.geometry_columns
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',

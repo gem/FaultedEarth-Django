@@ -344,7 +344,7 @@ WHERE
         
          # fold simple geometry view
 
-         db.execute("""CREATE VIEW gem.simple_fold_geom_view AS
+        db.execute("""CREATE VIEW gem.simple_fold_geom_view AS
                   SELECT f.id, f.fold_name, f.simple_fold_geom
                   FROM gem.observations_fold f""")
 

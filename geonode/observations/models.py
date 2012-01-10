@@ -314,6 +314,7 @@ class Fold(models.Model):
     contrib = models.CharField(max_length=30, null=True, blank=True)
     created = models.DecimalField(max_digits=4, decimal_places=3, null=True,
             blank=True)
+    simple_fold_geom = models.MultiLineStringField(srid=4326, null=True, blank=True)
 
 class FoldSection(models.Model):
     fold = models.ManyToManyField('fold')

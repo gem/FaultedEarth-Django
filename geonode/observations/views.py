@@ -127,7 +127,7 @@ def foldtraces(request):
             if isinstance(foldtrace, dict):
                 fold_section.sec_name = foldtrace['name']
             else:
-                foldtrace = models.Foldtrace.objects.get(pk=foldtrace.split('.')[1])
+                foldtrace = models.FoldTrace.objects.get(pk=foldtrace.split('.')[1])
                 foldtrace.fold_section.add(fold_section)
 
         fold_section.save()

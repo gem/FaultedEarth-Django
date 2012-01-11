@@ -109,7 +109,7 @@ def foldsection(request):
         fold.save()
 
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM set_fold_simplegeom(%s)", [fault.pk])
+    cursor.execute("SELECT * FROM set_fold_simplegeom(%s)", [fold.pk])
     transaction.commit_unless_managed()
 
     return response

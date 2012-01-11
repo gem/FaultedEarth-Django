@@ -96,14 +96,14 @@ def foldsection(request):
 
         json_data = request.raw_post_data
 
-        fault = models.Fold.objects.create()
+        fold = models.Fold.objects.create()
 
         for fold_section in simplejson.loads(json_data):
             if isinstance(fold_section, dict):
                 fold.fold_name = fold_section['name']
             else:
                 fold_section = models.FoldSection.objects.get(
-                        pk=fault_section)
+                        pk=fold_section)
                 fold_section.fold.add(fold)
 
         fold.save()

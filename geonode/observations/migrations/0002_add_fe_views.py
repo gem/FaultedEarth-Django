@@ -341,6 +341,12 @@ WHERE
         db.execute("""CREATE VIEW gem.simple_geom_view AS
                  SELECT f.id, f.fault_name, f.simple_geom
                  FROM gem.observations_fault f""")
+        
+         # fold simple geometry view
+
+        db.execute("""CREATE VIEW gem.simple_fold_geom_view AS
+                  SELECT g.id, g.fold_name, g.simple_fold_geom
+                  FROM gem.observations_fold g""")
 
         # "publish" the geometries into public.geometry_columns
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
@@ -358,6 +364,10 @@ WHERE
         db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
                 'simple_geom_view', 'simple_geom', '2', 4326,
                 'MULTILINESTRING')""")
+                
+        db.execute("""INSERT INTO public.geometry_columns VALUES ('', 'gem',
+                'simple_fold_geom_view', 'simple_fold_geom', '2', 4326,
+                'MULTILINESTRING')""")
 
 
     def backwards(self, orm):
@@ -366,6 +376,7 @@ WHERE
         db.execute("DROP VIEW simple_geom_view")
         db.execute("DROP VIEW fold_section_view")
         db.execute("DROP VIEW fold_view")
+        db.execute("DROP VIEW simple_fold_geom_view")
 
 
     models = {

@@ -144,7 +144,13 @@ def faultsource(request):
         create_faultsource(fault, name)
 
     return HttpResponse('ok')
-
+    
+def export(request):
+    if request.method == 'PUT':
+        
+        json_data = simplejson.loads(request.raw_post_data)
+        
+    return HttpResponse('ok')
 
 def new(request, summary_id):
     o = models.Observations(summary_id=summary_id)
